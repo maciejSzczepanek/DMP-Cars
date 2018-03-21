@@ -27,6 +27,6 @@ public class AccountDetail {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "accountDetail")
-    private Collection <Account> accounts;
+    private Collection<Account> accounts;
 
 }
