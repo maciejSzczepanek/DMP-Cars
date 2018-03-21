@@ -26,11 +26,11 @@ public class Account {
     @NotNull
     private Integer accountDetailId;
 
-/*    @ManyToOne
+    @ManyToOne
     @JoinColumn(name = "accountTypeId")
     private AccountType accountType;
 
     @ManyToOne
     @JoinColumn(name = "accountBetailId")
-    private AccountDetail accountDetail;*/
+    private AccountDetail accountDetail;
 }

@@ -1,13 +1,13 @@
 package com.sda.dmpcars.model;
 
-import com.sda.dmpcars.helper.EngineType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+        import com.sda.dmpcars.helper.EngineType;
+        import lombok.AllArgsConstructor;
+        import lombok.Data;
+        import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Collection;
+        import javax.persistence.*;
+        import javax.validation.constraints.NotNull;
+        import java.util.Collection;
 
 @Data
 @NoArgsConstructor

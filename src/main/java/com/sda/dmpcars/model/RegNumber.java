@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -17,7 +18,7 @@ public class RegNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private int id;
+    private Integer id;
     @NotNull
     private String number;
     @NotNull

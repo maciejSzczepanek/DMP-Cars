@@ -20,7 +20,7 @@ public class Rent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private int id;
+    private Integer id;
     @NotNull
     private LocalDate dateFrom;
     @NotNull

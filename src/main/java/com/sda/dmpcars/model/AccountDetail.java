@@ -19,7 +19,7 @@ public class AccountDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String email;

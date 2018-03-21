@@ -19,7 +19,7 @@ public class AccountType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     @NotNull
     private String type;
     @OneToMany(mappedBy = "accountType")
