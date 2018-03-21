@@ -1,3 +1,4 @@
+/*
 package com.sda.dmpcars.model;
 
 import lombok.AllArgsConstructor;
@@ -28,3 +29,4 @@ public class RegNumber {
     private Car car;
 
 }
+*/

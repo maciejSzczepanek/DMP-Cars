@@ -1,3 +1,4 @@
+/*
 package com.sda.dmpcars.model;
 
 import lombok.AllArgsConstructor;
@@ -27,3 +28,4 @@ public class Color {
     private Collection<Car> cars;
 
 }
+*/

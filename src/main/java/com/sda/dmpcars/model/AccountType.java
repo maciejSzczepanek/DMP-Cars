@@ -1,3 +1,4 @@
+/*
 package com.sda.dmpcars.model;
 
 import lombok.AllArgsConstructor;
@@ -22,8 +23,11 @@ public class AccountType {
     private int id;
     @NotNull
     private String type;
-
+*/
+/*
     @OneToMany(mappedBy = "accountType")
-    private Collection<Account> accounts;
+    private Collection<Account> accounts;*//*
+
 
 }
+*/

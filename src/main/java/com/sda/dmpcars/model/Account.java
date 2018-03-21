@@ -17,20 +17,20 @@ import javax.validation.constraints.NotNull;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @NotNull
     private String password;
     @NotNull
-    private int accountTypeId;
+    private Integer accountTypeId;
     @NotNull
-    private int accountDetailId;
+    private Integer accountDetailId;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "accountTypeId")
     private AccountType accountType;
 
     @ManyToOne
     @JoinColumn(name = "accountBetailId")
-    private AccountDetail accountDetail;
+    private AccountDetail accountDetail;*/
 }

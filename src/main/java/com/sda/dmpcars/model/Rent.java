@@ -1,3 +1,4 @@
+/*
 package com.sda.dmpcars.model;
 
 
@@ -30,14 +31,19 @@ public class Rent {
     @NotNull
     private int carId;
     @NotNull
-    private int accountId;
+    private Integer accountId;
 
-    @ManyToOne
+   */
+/* @ManyToOne
     @JoinColumn(name = "carId")
-    private Car car;
+    private Car car;*//*
 
-    @ManyToOne
+
+*/
+/*    @ManyToOne
     @JoinColumn(name = "accountId")
-    private Account account;
+    private Account account;*//*
+
 
 }
+*/
