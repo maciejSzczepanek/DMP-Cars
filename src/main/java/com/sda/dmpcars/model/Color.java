@@ -1,4 +1,3 @@
-/*
 package com.sda.dmpcars.model;
 
 import lombok.AllArgsConstructor;
@@ -19,7 +18,7 @@ public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private int id;
+    private Integer id;
     @NotNull
     private String name;
 
@@ -28,4 +27,3 @@ public class Color {
     private Collection<Car> cars;
 
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package com.sda.dmpcars.model;
 
 import lombok.AllArgsConstructor;
@@ -27,10 +26,8 @@ public class AccountDetail {
     private LocalDate yearOfBirth;
     private String phoneNumber;
 
- */
-/*   @OneToMany(mappedBy = "accountDetail")
-    private Collection<Account> accounts;*//*
+   @OneToMany(mappedBy = "accountDetail")
+    private Collection<Account> accounts;
 
 
 }
-*/

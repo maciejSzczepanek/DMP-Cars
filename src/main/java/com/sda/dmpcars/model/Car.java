@@ -1,4 +1,3 @@
-/*
 package com.sda.dmpcars.model;
 
 import lombok.AllArgsConstructor;
@@ -21,27 +20,27 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private int id;
+    private Integer id;
     @NotNull
     private String model;
     @NotNull
-    private int brandId;
+    private Integer brandId;
     @NotNull
-    private int typeId;
+    private Integer typeId;
     @NotNull
-    private int engineId;
+    private Integer engineId;
     @NotNull
     private LocalDate yearOfProduction;
     @NotNull
-    private int colorId;
+    private Integer colorId;
     @NotNull
-    private double capacity;
+    private Double capacity;
     @NotNull
-    private int powerKm;
+    private Integer powerKm;
     @NotNull
-    private byte available; // w bazie jest binary
+    private Byte available; // w bazie jest binary
     @NotNull
-    private int regNumberId;
+    private Integer regNumberId;
     @NotNull
     private BigDecimal price;
 
@@ -70,4 +69,3 @@ public class Car {
     private Collection<Rent> rents;
 
 }
-*/

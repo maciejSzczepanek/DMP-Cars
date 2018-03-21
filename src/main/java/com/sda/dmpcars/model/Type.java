@@ -1,4 +1,3 @@
-/*
 package com.sda.dmpcars.model;
 
 import lombok.AllArgsConstructor;
@@ -29,4 +28,3 @@ public class Type {
     private Collection<Car> cars;
 
 }
-*/

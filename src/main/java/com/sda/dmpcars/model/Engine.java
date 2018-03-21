@@ -1,4 +1,3 @@
-/*
 package com.sda.dmpcars.model;
 
 import com.sda.dmpcars.helper.EngineType;
@@ -20,7 +19,7 @@ public class Engine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private int id;
+    private Integer id;
     @NotNull
     private String type;
     @NotNull
@@ -31,4 +30,3 @@ public class Engine {
     private Collection<Car> cars;
 
 }
-*/
