@@ -24,5 +24,6 @@ public class AccountType {
     private String type;
 
     @OneToMany(mappedBy = "accountType")
-    private Collection<Account> accountCollection;
+    private Collection<Account> accounts;
+
 }
