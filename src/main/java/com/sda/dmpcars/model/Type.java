@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
+
 
 @Data
 @NoArgsConstructor
@@ -23,6 +25,6 @@ public class Type {
 
     @OneToMany
     @JoinColumn(name = "id")
-    private Car car;
+    private Collection<Car> cars;
 
 }

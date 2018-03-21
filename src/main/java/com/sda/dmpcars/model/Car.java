@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collection;
 
 @Data
 @NoArgsConstructor
@@ -62,5 +63,9 @@ public class Car {
     @OneToOne
     @JoinColumn(name = "regNumber")
     private RegNumber regNumber;
+
+    @OneToMany
+    @JoinColumn(name = "car")
+    private Collection<Rent> rents;
 
 }
