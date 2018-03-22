@@ -1,6 +1,5 @@
 package com.sda.dmpcars.model;
 
-import com.sda.dmpcars.helper.EngineType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Data
