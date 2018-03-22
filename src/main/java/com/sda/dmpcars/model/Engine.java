@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "engines")
-public class Engine {
+public class Engine implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
