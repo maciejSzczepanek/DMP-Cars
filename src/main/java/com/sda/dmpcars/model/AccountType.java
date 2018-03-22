@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,15 +17,17 @@ import java.util.Collection;
 @Builder
 
 @Entity
+@Table(name = "account_types")
 public class AccountType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @NotNull
-    private String type;
+    private String role;
+
     @OneToMany(mappedBy = "accountType")
-    private Collection<Account> accounts;
+    private List<Account> accounts = new ArrayList<>();
 
 
 }

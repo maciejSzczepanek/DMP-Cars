@@ -6,24 +6,25 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 
 @Entity
+@Table(name = "brands")
 public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Integer id;
     @NotNull
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "id")
-    private Collection<Car> cars;
+    @OneToMany(mappedBy = "brand")
+    private List<Car> cars = new ArrayList<>();
 
 }

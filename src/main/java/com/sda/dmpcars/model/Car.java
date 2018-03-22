@@ -15,32 +15,22 @@ import java.util.Collection;
 @AllArgsConstructor
 
 @Entity
+@Table(name = "cars")
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Integer id;
     @NotNull
     private String model;
     @NotNull
-    private Integer brandId;
-    @NotNull
-    private Integer typeId;
-    @NotNull
-    private Integer engineId;
-    @NotNull
     private LocalDate yearOfProduction;
-    @NotNull
-    private Integer colorId;
     @NotNull
     private Double capacity;
     @NotNull
     private Integer powerKm;
     @NotNull
-    private Byte available; // w bazie jest binary
-    @NotNull
-    private Integer regNumberId;
+    private boolean available; // w bazie jest binary
     @NotNull
     private BigDecimal price;
 
@@ -61,11 +51,12 @@ public class Car {
     private Color color;
 
     @OneToOne
-    @JoinColumn(name = "regNumber")
+    @JoinColumn(name = "regNumberId")
     private RegNumber regNumber;
-
+/*
     @OneToMany
     @JoinColumn(name = "car")
     private Collection<Rent> rents;
+*/
 
 }

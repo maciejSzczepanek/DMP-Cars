@@ -15,6 +15,7 @@ import java.util.Collection;
 @Builder
 
 @Entity
+@Table(name = "account_details")
 public class AccountDetail {
 
     @Id
@@ -26,8 +27,8 @@ public class AccountDetail {
     private LocalDate yearOfBirth;
     private String phoneNumber;
 
-   @OneToMany(mappedBy = "accountDetail")
-    private Collection<Account> accounts;
+   @OneToOne(mappedBy = "accountDetail")
+    private Account account;
 
 
 }

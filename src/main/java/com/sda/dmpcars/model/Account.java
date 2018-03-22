@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 
 @Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
@@ -21,16 +22,12 @@ public class Account {
     private Integer id;
     @NotNull
     private String password;
-    @NotNull
-    private Integer accountTypeId;
-    @NotNull
-    private Integer accountDetailId;
 
     @ManyToOne
     @JoinColumn(name = "accountTypeId")
     private AccountType accountType;
 
-    @ManyToOne
-    @JoinColumn(name = "accountBetailId")
+    @OneToOne
+    @JoinColumn(name = "accountDetailId")
     private AccountDetail accountDetail;
 }

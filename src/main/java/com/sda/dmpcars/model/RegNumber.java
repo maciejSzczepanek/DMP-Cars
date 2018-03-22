@@ -13,19 +13,18 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 
 @Entity
+@Table(name = "reg_number")
 public class RegNumber {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Integer id;
     @NotNull
     private String number;
     @NotNull
     private String vin;
 
-    @OneToOne
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "regNumber")
     private Car car;
 
 }

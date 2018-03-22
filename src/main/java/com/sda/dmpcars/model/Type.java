@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Data
@@ -14,6 +16,7 @@ import java.util.Collection;
 @AllArgsConstructor
 
 @Entity
+@Table(name = "types")
 public class Type {
 
     @Id
@@ -23,8 +26,7 @@ public class Type {
     @NotNull
     private String name;
 
-    @OneToMany
-    @JoinColumn(name = "id")
-    private Collection<Car> cars;
+    @OneToMany(mappedBy = "type")
+    private List<Car> cars = new ArrayList<>();
 
 }
