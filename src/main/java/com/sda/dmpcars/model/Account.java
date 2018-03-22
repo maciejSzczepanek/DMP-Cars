@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -30,4 +34,8 @@ public class Account {
     @OneToOne
     @JoinColumn(name = "accountDetailId")
     private AccountDetail accountDetail;
+
+    @OneToMany(mappedBy = "account")
+    private List<Rent> rents = new ArrayList<>();
+
 }
