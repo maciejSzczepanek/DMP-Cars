@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -16,10 +15,10 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 @Entity
 @Table(name = "rents")
 public class Rent implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,12 +29,12 @@ public class Rent implements Serializable {
     private LocalDate dateTo;
     private BigDecimal totalPrice;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "rent")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "carId")
     private Car car;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rent")
+    @JoinColumn(name = "rentId")
     private Account account;
 
     @Override
