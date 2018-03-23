@@ -31,13 +31,13 @@ public class Account implements Serializable{
     @NotNull
     private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "accountTypeId")
     private AccountType accountType;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "accountDetailId")

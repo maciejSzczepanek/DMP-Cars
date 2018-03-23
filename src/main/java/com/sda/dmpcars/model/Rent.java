@@ -1,8 +1,10 @@
 package com.sda.dmpcars.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +14,7 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
+@Builder
 @Entity
 @Table(name = "rents")
 public class Rent {
@@ -26,12 +28,11 @@ public class Rent {
     private LocalDate dateTo;
     private BigDecimal totalPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "rent")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rentId")
     private Car car;
 
-    @ManyToOne
-    @JoinColumn(name = "rent")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rentId")
     private Account account;
-
 }
