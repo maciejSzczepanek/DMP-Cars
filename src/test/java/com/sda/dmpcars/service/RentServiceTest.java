@@ -43,7 +43,7 @@ public class RentServiceTest {
                 .build();
         rents.add(r1);
 
-        Mockito.when(rentDao.getRentByCarId(1)).thenReturn(rents);
+        Mockito.when(rentDao.findRentByCarId(1)).thenReturn(rents);
         List<Rent> actual = rentService.getAllRentsByCarId(1);
         Assert.assertEquals(1, actual.size());
     }
@@ -59,7 +59,7 @@ public class RentServiceTest {
                 .build();
         rents.add(r1);
 
-        Mockito.when(rentDao.getRentByAccountId(1)).thenReturn(rents);
+        Mockito.when(rentDao.findRentByAccountId(1)).thenReturn(rents);
         List<Rent> actual = rentService.getAllRentsByAccountId(1);
         Assert.assertEquals(1, actual.size());
     }
@@ -77,7 +77,7 @@ public class RentServiceTest {
     }
 
     @Test
-    public void update() {
+    public void updateRent() {
     }
 
 }

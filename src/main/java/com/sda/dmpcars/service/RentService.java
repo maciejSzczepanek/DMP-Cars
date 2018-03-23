@@ -18,12 +18,12 @@ public class RentService {
     }
 
     public List<Rent> getAllRentsByCarId(Integer carId) {
-        List<Rent> rents = rentDao.getRentByCarId(carId);
+        List<Rent> rents = rentDao.findRentByCarId(carId);
         return rents;
     }
 
     public List<Rent> getAllRentsByAccountId(Integer accountId) {
-        List<Rent> rents = rentDao.getRentByAccountId(accountId);
+        List<Rent> rents = rentDao.findRentByAccountId(accountId);
         return rents;
     }
 
@@ -39,7 +39,7 @@ public class RentService {
         rentDao.save(rent);
     }
 
-    public Rent update(Rent rent) {
+    public Rent updateRent(Rent rent) {
         return rentDao.save(rent);
     }
 

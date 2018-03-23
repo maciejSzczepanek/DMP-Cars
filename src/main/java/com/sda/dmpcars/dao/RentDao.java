@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface RentDao extends CrudRepository<Rent, Integer> {
-    List<Rent> getRentByCarId(Integer id);
+    List<Rent> findRentByCarId(Integer id);
 
-    List<Rent> getRentByAccountId(Integer id);
+    List<Rent> findRentByAccountId(Integer id);
 }
