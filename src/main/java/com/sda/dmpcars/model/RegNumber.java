@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "reg_number")
-public class RegNumber {
+public class RegNumber implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

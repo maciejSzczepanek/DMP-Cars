@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -16,7 +17,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "account_details")
-public class AccountDetail {
+public class AccountDetail implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,7 +20,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "cars")
-public class Car {
+public class Car implements Serializable{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -32,7 +34,7 @@ public class Car {
     @NotNull
     private Integer powerKm;
     @NotNull
-    private boolean available; // w bazie jest binary
+    private boolean available; 
     @NotNull
     private BigDecimal price;
 
@@ -55,11 +57,9 @@ public class Car {
     @OneToOne
     @JoinColumn(name = "regNumberId")
     private RegNumber regNumber;
-/*
-    @OneToMany
-    @JoinColumn(name = "car")
-    private Collection<Rent> rents;
-*/
+
+    @OneToMany(mappedBy = "car")
+    private List<Rent> rents = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
