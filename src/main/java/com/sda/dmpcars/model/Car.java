@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collection;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +16,7 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "cars")
-public class Car {
+public class Car implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
