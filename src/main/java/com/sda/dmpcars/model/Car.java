@@ -4,14 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.hibernate.annotations.Cascade;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,30 +33,41 @@ public class Car implements Serializable{
     @NotNull
     private Integer powerKm;
     @NotNull
-    private boolean available; 
+    private boolean available;
     @NotNull
     private BigDecimal price;
 
     @ManyToOne
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+            org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "brandId")
     private Brand brand;
 
     @ManyToOne
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+            org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "typeId")
     private Type type;
 
     @ManyToOne
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+            org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "engineId")
     private Engine engine;
 
     @ManyToOne
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+            org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "colorId")
     private Color color;
 
     @OneToOne
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+            org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "regNumberId")
     private RegNumber regNumber;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "car")
     private List<Rent> rents = new ArrayList<>();
 
@@ -77,4 +87,5 @@ public class Car implements Serializable{
 
         return Objects.hash(super.hashCode(), id, model, yearOfProduction, capacity, powerKm, available, price, brand, type, engine, color, regNumber);
     }
+
 }

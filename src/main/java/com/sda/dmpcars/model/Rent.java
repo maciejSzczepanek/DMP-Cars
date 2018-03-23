@@ -24,8 +24,10 @@ public class Rent implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotNull
+    @Temporal
     private LocalDate dateFrom;
     @NotNull
+    @Temporal
     private LocalDate dateTo;
     private BigDecimal totalPrice;
 
@@ -34,7 +36,7 @@ public class Rent implements Serializable {
     private Car car;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rentId")
+    @JoinColumn(name = "accountId")
     private Account account;
 
     @Override
@@ -51,3 +53,4 @@ public class Rent implements Serializable {
         return Objects.hash(super.hashCode(), id, dateFrom, dateTo, totalPrice, car, account);
     }
 }
+
