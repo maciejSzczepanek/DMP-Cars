@@ -9,6 +9,8 @@ import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -40,6 +42,9 @@ public class Account implements Serializable{
             org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "accountDetailId")
     private AccountDetail accountDetail;
+
+    @OneToMany(mappedBy = "account")
+    private List<Rent> rents = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
