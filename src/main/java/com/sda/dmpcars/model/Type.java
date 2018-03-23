@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "types")
-public class Type {
+public class Type implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "cars")
-public class Car {
+public class Car implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,7 +32,7 @@ public class Car {
     @NotNull
     private Integer powerKm;
     @NotNull
-    private boolean available; // w bazie jest binary
+    private boolean available; 
     @NotNull
     private BigDecimal price;
 
