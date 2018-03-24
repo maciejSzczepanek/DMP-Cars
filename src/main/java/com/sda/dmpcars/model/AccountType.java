@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -30,5 +31,18 @@ public class AccountType implements Serializable {
     @OneToMany(mappedBy = "accountType")
     private List<Account> accounts = new ArrayList<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AccountType that = (AccountType) o;
+        return Objects.equals(role, that.role);
+    }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), role);
+    }
 }

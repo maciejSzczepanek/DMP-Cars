@@ -1,5 +1,6 @@
 package com.sda.dmpcars.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -59,6 +60,6 @@ public class Account implements Serializable{
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, login, password, accountType, accountDetail);
+        return Objects.hash(super.hashCode(), id, login);
     }
 }
