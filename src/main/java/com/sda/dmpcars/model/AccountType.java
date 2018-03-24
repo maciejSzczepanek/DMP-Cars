@@ -1,5 +1,6 @@
 package com.sda.dmpcars.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,8 +29,9 @@ public class AccountType implements Serializable {
     @NotNull
     private String role;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "accountType")
-    private List<Account> accounts = new ArrayList<>();
+    private List<Account> accounts;
 
     @Override
     public boolean equals(Object o) {

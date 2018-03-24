@@ -1,5 +1,6 @@
 package com.sda.dmpcars.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,8 +45,9 @@ public class Account implements Serializable{
     @JoinColumn(name = "accountDetailId")
     private AccountDetail accountDetail;
 
-    @OneToMany(mappedBy = "account")
-    private List<Rent> rents = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    private List<Rent> rents;
 
     @Override
     public boolean equals(Object o) {
@@ -59,7 +61,6 @@ public class Account implements Serializable{
 
     @Override
     public int hashCode() {
-
         return Objects.hash(super.hashCode(), id, login);
     }
 }

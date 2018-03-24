@@ -51,7 +51,7 @@ public class Rent implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, dateFrom, dateTo, totalPrice, car, account);
+
+        return Objects.hash(super.hashCode(), id);
     }
 }
-
