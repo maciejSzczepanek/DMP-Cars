@@ -52,30 +52,25 @@ public class AccountServiceTest {
     @Test
     public void should_add_account(){
         //given
-        AccountDto accountDto = new AccountDto();
-        accountDto.setId(1);
-        accountDto.setLogin("login");
-        accountDto.setFirstName("first");
-        accountDto.setLastName("last");
-        accountDto.setPassword("password");
-        accountDto.setEmail("asd");
-        accountDto.setPhoneNumber("123");
-        accountDto.setYearOfBirth(LocalDate.now());
+        AccountDto accountDto = AccountDto.builder().id(1).login("login").password("password").firstName("first")
+                .lastName("last").phoneNumber("123").email("asd").yearOfBirth("123").build();
 
-        AccountDetail accountDetail = new AccountDetail();
-        accountDetail.setFirstName("first");
-        accountDetail.setLastName("last");
-        accountDetail.setYearOfBirth(LocalDate.now());
-        accountDetail.setEmail("asd");
-        accountDetail.setPhoneNumber("123");
-        AccountType accountType = new AccountType();
-        accountType.setRole("USER");
-        Account account = new Account();
-        account.setId(1);
-        account.setLogin("login");
-        account.setPassword("password");
-        account.setAccountType(accountType);
-        account.setAccountDetail(accountDetail);
+        Account account = Account.builder().id(accountDto.getId()).login(accountDto.getLogin())
+                .password(accountDto.getPassword()).accountDetail(AccountDetail.builder()
+                        .firstName(accountDto.getFirstName()).lastName(accountDto.getLastName())
+                        .email(accountDto.getEmail()).phoneNumber(accountDto.getPhoneNumber())
+                        .yearOfBirth(accountDto.getYearOfBirth()).build()).accountType(AccountType.builder()
+                        .role("USER").build()).build();
+
+        boolean expected = true;
+
+        //when
+        Mockito.when(accountDao.save(account)).thenReturn(account);
+        boolean actual = accountService.addAccount(accountDto);
+
+        //then
+        assertEquals(expected, actual);
+//        Mockito.verify(accountDao, Mockito.times(1)).save(account);
 
     }
 }

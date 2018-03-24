@@ -28,7 +28,7 @@ public class AccountDetail implements Serializable {
     private String lastName;
     private String email;
     @Temporal(value = TemporalType.DATE)
-    private LocalDate yearOfBirth;
+    private String yearOfBirth;
     private String phoneNumber;
 
    @OneToOne(mappedBy = "accountDetail")

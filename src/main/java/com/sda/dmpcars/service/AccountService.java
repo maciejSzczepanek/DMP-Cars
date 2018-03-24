@@ -60,21 +60,23 @@ public class AccountService {
     public List<AccountDto> getAllAccounts() {
         List<AccountDto> result = new ArrayList<>();
 
-        accountDao.findAll().forEach(account -> AccountDto.builder().id(account.getId()).login(account.getLogin())
+        accountDao.findAll().forEach(account -> result.add(AccountDto.builder().id(account.getId()).login(account.getLogin())
                 .password(account.getPassword()).firstName(account.getAccountDetail().getFirstName())
                 .lastName(account.getAccountDetail().getLastName()).email(account.getAccountDetail().getEmail())
                 .phoneNumber(account.getAccountDetail().getPhoneNumber())
                 .yearOfBirth(account.getAccountDetail().getYearOfBirth())
-                .build());
+                .build()));
 
         return result;
     }
 
-    public void deleteAccount(AccountDto accountDto) {
+    public boolean deleteAccount(AccountDto accountDto) {
         if (validator.validate(accountDto)) {
             Account account = Account.builder().id(accountDto.getId()).login(accountDto.getLogin()).build();
             accountDao.delete(account);
+            return true;
         }
+        return false;
     }
 
     public void deleteAllAccounts() {
@@ -100,6 +102,14 @@ public class AccountService {
                     .build();
         }
         return new AccountDto();
+    }
+
+    public Account getRawAccount(Integer id) {
+        Account account = accountDao.findById(id).orElse(null);
+        if (account != null)
+            return account;
+
+        return new Account();
     }
 }
 
