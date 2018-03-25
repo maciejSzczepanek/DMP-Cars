@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +21,6 @@ public class AccountDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String yearOfBirth;
+    private Date yearOfBirth;
     private String phoneNumber;
 }

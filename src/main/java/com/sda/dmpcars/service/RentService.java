@@ -1,3 +1,4 @@
+/*
 package com.sda.dmpcars.service;
 
 import com.sda.dmpcars.dao.RentDao;
@@ -44,3 +45,4 @@ public class RentService {
     }
 
 }
+*/

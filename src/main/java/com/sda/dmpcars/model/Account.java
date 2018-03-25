@@ -1,19 +1,16 @@
 package com.sda.dmpcars.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -29,10 +26,10 @@ public class Account implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @NotNull
-    private String login;
+    private String username;
     @NotNull
     private String password;
-
+    private boolean enabled;
     @ManyToOne
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.ALL})
@@ -56,11 +53,11 @@ public class Account implements Serializable{
         if (!super.equals(o)) return false;
         Account account = (Account) o;
         return Objects.equals(id, account.id) &&
-                Objects.equals(login, account.login);
+                Objects.equals(username, account.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, login);
+        return Objects.hash(super.hashCode(), id, username);
     }
 }

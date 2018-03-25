@@ -27,14 +27,14 @@ public class AccountService {
 
     public boolean addAccount(AccountDto accountDto) {
         if (validator.validate(accountDto)) {
-            Account account = Account.builder().id(accountDto.getId()).login(accountDto.getLogin())
+            Account account = Account.builder().id(accountDto.getId()).username(accountDto.getLogin())
                     .password(accountDto.getPassword()).accountDetail(
                             AccountDetail.builder().firstName(accountDto.getFirstName())
                                     .lastName(accountDto.getLastName()).email(accountDto.getEmail())
                                     .phoneNumber(accountDto.getPhoneNumber()).yearOfBirth(accountDto.getYearOfBirth())
                                     .build()
                     ).accountType(
-                            AccountType.builder().role("USER").build()
+                            AccountType.builder().role("USER").username(accountDto.getLogin()).build()
                     ).build();
             accountDao.save(account);
             return true;
@@ -46,7 +46,7 @@ public class AccountService {
 
         Account account = accountDao.findById(id).orElse(null);
         if (account != null) {
-            return AccountDto.builder().id(account.getId()).login(account.getLogin())
+            return AccountDto.builder().id(account.getId()).login(account.getUsername())
                     .password(account.getPassword()).firstName(account.getAccountDetail().getFirstName())
                     .lastName(account.getAccountDetail().getLastName()).email(account.getAccountDetail().getEmail())
                     .phoneNumber(account.getAccountDetail().getPhoneNumber())
@@ -60,7 +60,7 @@ public class AccountService {
     public List<AccountDto> getAllAccounts() {
         List<AccountDto> result = new ArrayList<>();
 
-        accountDao.findAll().forEach(account -> result.add(AccountDto.builder().id(account.getId()).login(account.getLogin())
+        accountDao.findAll().forEach(account -> result.add(AccountDto.builder().id(account.getId()).login(account.getUsername())
                 .password(account.getPassword()).firstName(account.getAccountDetail().getFirstName())
                 .lastName(account.getAccountDetail().getLastName()).email(account.getAccountDetail().getEmail())
                 .phoneNumber(account.getAccountDetail().getPhoneNumber())
@@ -72,7 +72,7 @@ public class AccountService {
 
     public boolean deleteAccount(AccountDto accountDto) {
         if (validator.validate(accountDto)) {
-            Account account = Account.builder().id(accountDto.getId()).login(accountDto.getLogin()).build();
+            Account account = Account.builder().id(accountDto.getId()).username(accountDto.getLogin()).build();
             accountDao.delete(account);
             return true;
         }
@@ -85,7 +85,7 @@ public class AccountService {
 
     public AccountDto updateAccount(AccountDto accountDto) {
         if (validator.validate(accountDto)) {
-            Account account = Account.builder().id(accountDto.getId()).login(accountDto.getLogin())
+            Account account = Account.builder().id(accountDto.getId()).username(accountDto.getLogin())
                     .password(accountDto.getPassword()).accountDetail(
                             AccountDetail.builder().firstName(accountDto.getFirstName())
                                     .lastName(accountDto.getLastName()).email(accountDto.getEmail())
@@ -94,7 +94,7 @@ public class AccountService {
 
             account = accountDao.save(account);
 
-            return AccountDto.builder().id(account.getId()).login(account.getLogin())
+            return AccountDto.builder().id(account.getId()).login(account.getUsername())
                     .password(account.getPassword()).firstName(account.getAccountDetail().getFirstName())
                     .lastName(account.getAccountDetail().getLastName()).email(account.getAccountDetail().getEmail())
                     .phoneNumber(account.getAccountDetail().getPhoneNumber())

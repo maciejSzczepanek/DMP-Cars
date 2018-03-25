@@ -26,10 +26,10 @@ public class Rent implements Serializable {
     private int id;
     @NotNull
     @Temporal(value = TemporalType.DATE)
-    private LocalDate dateFrom;
+    private Date dateFrom;
     @NotNull
     @Temporal(value = TemporalType.DATE)
-    private LocalDate dateTo;
+    private Date dateTo;
     private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,7 +37,7 @@ public class Rent implements Serializable {
     private Car car;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "accountId")
+    @JoinColumn(name = "username")
     private Account account;
 
     @Override
