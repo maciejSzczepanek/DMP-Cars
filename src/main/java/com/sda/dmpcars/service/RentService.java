@@ -1,4 +1,3 @@
-/*
 package com.sda.dmpcars.service;
 
 import com.sda.dmpcars.dao.RentDao;
@@ -6,7 +5,7 @@ import com.sda.dmpcars.model.Rent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Set;
 
 @Service(value = "rentService")
 public class RentService {
@@ -18,13 +17,13 @@ public class RentService {
         this.rentDao = rentDao;
     }
 
-    public List<Rent> getAllRentsByCarId(Integer carId) {
-        List<Rent> rents = rentDao.findRentByCarId(carId);
+    public Set<Rent> getAllRentsByCarId(Integer id) {
+        Set<Rent> rents = rentDao.findRentsByCarId(id);
         return rents;
     }
 
-    public List<Rent> getAllRentsByAccountId(Integer accountId) {
-        List<Rent> rents = rentDao.findRentByAccountId(accountId);
+    public Set<Rent> getAllRentsByAccountId(Integer id) {
+        Set<Rent> rents = rentDao.findRentsByAccountId(id);
         return rents;
     }
 
@@ -45,4 +44,3 @@ public class RentService {
     }
 
 }
-*/

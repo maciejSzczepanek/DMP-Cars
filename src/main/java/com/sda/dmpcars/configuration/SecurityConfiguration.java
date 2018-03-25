@@ -26,13 +26,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/script/**", "/style/**", "/img/**", "/about", "/cars",
-                        "/register", "/", "/index")
+                        "/register", "/", "/index", "/cars/**", "/cars/car")
                 .permitAll()
                 .antMatchers("/userpanel")
                 .hasRole("USER")
-                .antMatchers("/adminpanel")
+                .antMatchers("/adminpanel", "/userpanel")
                 .hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()

@@ -14,10 +14,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class AccountDto {
     private Integer id;
     private String login;
     private String password;
+    private String role;
     private String firstName;
     private String lastName;
     private String email;
