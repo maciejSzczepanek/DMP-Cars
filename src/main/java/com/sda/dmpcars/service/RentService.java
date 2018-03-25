@@ -7,6 +7,8 @@ import com.sda.dmpcars.dto.AccountDto;
 import com.sda.dmpcars.dto.CarDto;
 import com.sda.dmpcars.dto.RentDto;
 import com.sda.dmpcars.model.Rent;
+import com.sda.dmpcars.validator.RentDtoValidator;
+import com.sda.dmpcars.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class RentService {
 
     private final RentDao rentDao;
+    private final Validator<RentDto> validator = new RentDtoValidator();
 
     @Autowired
     private CarDao carDao;
@@ -84,21 +87,24 @@ public class RentService {
         return result;
     }
 
-    public void addRent(RentDto rentDto) {
+    public boolean addRent(RentDto rentDto) {
+        if (validator.validate(rentDto)) {
+            Rent rent
+                    = Rent
+                    .builder()
+                    .id(rentDto.getId())
+                    .dateFrom(rentDto.getDateFrom())
+                    .dateTo(rentDto.getDateTo())
+                    .totalPrice(rentDto.getTotalPrice())
+                    .build();
 
-        Rent rent
-                = Rent
-                .builder()
-                .id(rentDto.getId())
-                .dateFrom(rentDto.getDateFrom())
-                .dateTo(rentDto.getDateTo())
-                .totalPrice(rentDto.getTotalPrice())
-                .build();
+            rent.setAccount(accountService.getRawAccount(accountDto.getId()));
+            rent.setCar(carService.getRawCar(carDto.getId()));
+            rentDao.save(rent);
+            return true;
+        }
 
-        rent.setAccount(accountService.getRawAccount(accountDto));
-        rent.setCar(carService.getRawCar(carDto));
-
-        rentDao.save(rent);
+        return false;
     }
 
     public RentDto updateRent(RentDto rentDto) {
@@ -112,8 +118,8 @@ public class RentService {
                 .totalPrice(rentDto.getTotalPrice())
                 .build();
 
-        rent.setAccount(accountService.getRawAccount(accountDto));
-        rent.setCar(carService.getRawCar(carDto));
+        rent.setAccount(accountService.getRawAccount(accountDto.getId()));
+        rent.setCar(carService.getRawCar(carDto.getId()));
 
         rent = rentDao.save(rent);
 
@@ -133,18 +139,30 @@ public class RentService {
                 .build();
     }
 
-    public void deleteRent(RentDto rentDto) {
-        Rent rent
-                = Rent
-                .builder()
-                .id(rentDto.getId())
-                .build();
+    public boolean deleteRent(RentDto rentDto) {
+        if (validator.validate(rentDto)) {
+            Rent rent
+                    = Rent
+                    .builder()
+                    .id(rentDto.getId())
+                    .build();
+            rentDao.delete(rent);
+            return true;
+        }
 
-        rentDao.delete(rent);
+        return false;
     }
 
     public void deleteAllRents() {
         rentDao.deleteAll();
+    }
+
+    public Rent getRawAccount(Integer id) {
+        Rent rent = rentDao.findById(id).orElse(null);
+        if (rent != null)
+            return rent;
+
+        return new Rent();
     }
 
 }

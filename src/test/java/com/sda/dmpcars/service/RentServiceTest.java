@@ -1,6 +1,9 @@
 package com.sda.dmpcars.service;
 
 import com.sda.dmpcars.dao.RentDao;
+import com.sda.dmpcars.dto.AccountDto;
+import com.sda.dmpcars.dto.CarDto;
+import com.sda.dmpcars.dto.RentDto;
 import com.sda.dmpcars.model.Rent;
 import lombok.Builder;
 import org.hibernate.mapping.Array;
@@ -14,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.swing.*;
 import java.math.BigDecimal;
@@ -22,62 +26,60 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringRunner.class)
 public class RentServiceTest {
 
     @Mock
-    RentDao rentDao;
+    private RentDao rentDao;
 
     @InjectMocks
-    RentService rentService;
+    private RentService rentService;
 
     @Test
-    public void getAllRentsByCarId() {
-        List<Rent> rents = new ArrayList<>();
-        Rent r1 = Rent
+    public void should_fail_to_add_rent() {
+        boolean expected = false;
+        Rent rent = new Rent();
+
+        Mockito.when(rentDao.save(rent)).thenReturn(rent);
+        boolean actual = rentService.addRent(new RentDto());
+
+        assertEquals(expected, actual);
+        Mockito.verify(rentDao, Mockito.times(0)).save(rent);
+    }
+
+    @Test
+    public void should_add_rent() {
+        RentDto rentDto
+                = RentDto
                 .builder()
                 .id(1)
-                .dateFrom(LocalDate.of(2018, 10, 10))
-                .dateTo(LocalDate.of(2018, 10, 20))
-                .totalPrice(BigDecimal.valueOf(100))
+                .dateFrom(LocalDate.of(2018, 1, 1))
+                .dateTo(LocalDate.of(2018, 1, 15))
+                .totalPrice(BigDecimal.valueOf(0))
+                .brand("")
+                .model("")
+                .regNumber("")
+                .price(BigDecimal.valueOf(0))
+                .login("")
+                .email("")
+                .phoneNumber("")
+                .carDto(new CarDto())
+                .accountDto(new AccountDto())
                 .build();
-        rents.add(r1);
 
-        Mockito.when(rentDao.findRentByCarId(1)).thenReturn(rents);
-        List<Rent> actual = rentService.getAllRentsByCarId(1);
-        Assert.assertEquals(1, actual.size());
-    }
-
-    @Test
-    public void getAllRentsByAccountId() {
-        List<Rent> rents = new ArrayList<>();
-        Rent r1 = Rent.builder()
-                .id(1)
-                .dateFrom(LocalDate.of(2018, 10, 10))
-                .dateTo(LocalDate.of(2018, 10, 20))
-                .totalPrice(BigDecimal.valueOf(100))
+        Rent rent
+                = Rent
+                .builder()
                 .build();
-        rents.add(r1);
 
-        Mockito.when(rentDao.findRentByAccountId(1)).thenReturn(rents);
-        List<Rent> actual = rentService.getAllRentsByAccountId(1);
-        Assert.assertEquals(1, actual.size());
-    }
+        boolean expected = true;
 
-    @Test
-    public void deleteRent() {
-    }
+        Mockito.when(rentDao.save(rent)).thenReturn(rent);
+        boolean actual = rentService.addRent(rentDto);
 
-    @Test
-    public void deleteAllRents() {
-    }
+        assertEquals(expected, actual);
+        Mockito.verify(rentDao, Mockito.times(1)).save(rent);
 
-    @Test
-    public void addRent() {
-    }
-
-    @Test
-    public void updateRent() {
     }
 
 }

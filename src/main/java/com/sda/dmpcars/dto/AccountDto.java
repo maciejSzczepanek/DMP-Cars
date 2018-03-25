@@ -20,6 +20,6 @@ public class AccountDto {
     private String firstName;
     private String lastName;
     private String email;
-    private LocalDate yearOfBirth;
+    private String yearOfBirth;
     private String phoneNumber;
 }

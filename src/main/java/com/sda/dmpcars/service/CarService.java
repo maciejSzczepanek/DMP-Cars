@@ -156,37 +156,12 @@ public class CarService {
                 .build();
     }
 
-    public Car getRawCar(CarDto carDto) {
-        return Car
-                .builder()
-                .id(carDto.getId())
-                .model(carDto.getModel())
-                .yearOfProduction(carDto.getYearOfProduction())
-                .capacity(carDto.getCapacity())
-                .powerKm(carDto.getPowerKm())
-                .available(carDto.isAvailable())
-                .price(carDto.getPrice())
-                .brand(Brand
-                        .builder()
-                        .name(carDto.getBrand())
-                        .build())
-                .type(Type
-                        .builder()
-                        .name(carDto.getType())
-                        .build())
-                .engine(Engine
-                        .builder()
-                        .type(carDto.getEngine())
-                        .build())
-                .color(Color
-                        .builder()
-                        .name(carDto.getColor())
-                        .build())
-                .regNumber(RegNumber
-                        .builder()
-                        .number(carDto.getRegNumber())
-                        .build())
-                .build();
+    public Car getRawCar(Integer id) {
+        Car car = carDao.findById(id).orElse(null);
+        if (car != null)
+            return car;
+
+        return new Car();
     }
 
 }
