@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 @Data
@@ -24,10 +25,10 @@ public class Rent implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotNull
-    @Temporal
+    @Temporal(value = TemporalType.DATE)
     private LocalDate dateFrom;
     @NotNull
-    @Temporal
+    @Temporal(value = TemporalType.DATE)
     private LocalDate dateTo;
     private BigDecimal totalPrice;
 
@@ -50,7 +51,7 @@ public class Rent implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), id, dateFrom, dateTo, totalPrice, car, account);
+
+        return Objects.hash(super.hashCode(), id);
     }
 }
-

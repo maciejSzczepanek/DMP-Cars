@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -77,15 +80,13 @@ public class Car implements Serializable{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Car car = (Car) o;
-        return available == car.available &&
-                Objects.equals(id, car.id) &&
+        return Objects.equals(id, car.id) &&
                 Objects.equals(regNumber, car.regNumber);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, model, yearOfProduction, capacity, powerKm, available, price, brand, type, engine, color, regNumber);
+        return Objects.hash(super.hashCode(), id, regNumber);
     }
-
 }

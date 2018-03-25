@@ -1,8 +1,14 @@
 package com.sda.dmpcars.service;
 
 import com.sda.dmpcars.dao.AccountDao;
+import com.sda.dmpcars.dto.AccountDto;
 import com.sda.dmpcars.model.Account;
+import com.sda.dmpcars.model.AccountDetail;
+import com.sda.dmpcars.model.AccountType;
+import com.sda.dmpcars.validator.AccountDtoValidator;
+import com.sda.dmpcars.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,39 +18,98 @@ import java.util.List;
 public class AccountService {
 
     private final AccountDao accountDao;
+    private final Validator<AccountDto> validator = new AccountDtoValidator();
 
     @Autowired
     public AccountService(AccountDao accountDao) {
         this.accountDao = accountDao;
     }
 
-    public void addAccount(Account account){
-        accountDao.save(account);
+    public boolean addAccount(AccountDto accountDto) {
+        if (validator.validate(accountDto)) {
+            Account account = Account.builder().id(accountDto.getId()).login(accountDto.getLogin())
+                    .password(accountDto.getPassword()).accountDetail(
+                            AccountDetail.builder().firstName(accountDto.getFirstName())
+                                    .lastName(accountDto.getLastName()).email(accountDto.getEmail())
+                                    .phoneNumber(accountDto.getPhoneNumber()).yearOfBirth(accountDto.getYearOfBirth())
+                                    .build()
+                    ).accountType(
+                            AccountType.builder().role("USER").build()
+                    ).build();
+            accountDao.save(account);
+            return true;
+        }
+        return false;
     }
 
-    public Account getAccountById(Integer id){
-        return accountDao.findById(id).orElse(new Account());
+    public AccountDto getAccountById(Integer id) {
+
+        Account account = accountDao.findById(id).orElse(null);
+        if (account != null) {
+            return AccountDto.builder().id(account.getId()).login(account.getLogin())
+                    .password(account.getPassword()).firstName(account.getAccountDetail().getFirstName())
+                    .lastName(account.getAccountDetail().getLastName()).email(account.getAccountDetail().getEmail())
+                    .phoneNumber(account.getAccountDetail().getPhoneNumber())
+                    .yearOfBirth(account.getAccountDetail().getYearOfBirth())
+                    .build();
+        }
+
+        return new AccountDto();
     }
 
-    public List<Account> getAllAccounts(){
-        List<Account> result = new ArrayList<>();
-        accountDao.findAll().forEach(result::add);
+    public List<AccountDto> getAllAccounts() {
+        List<AccountDto> result = new ArrayList<>();
+
+        accountDao.findAll().forEach(account -> result.add(AccountDto.builder().id(account.getId()).login(account.getLogin())
+                .password(account.getPassword()).firstName(account.getAccountDetail().getFirstName())
+                .lastName(account.getAccountDetail().getLastName()).email(account.getAccountDetail().getEmail())
+                .phoneNumber(account.getAccountDetail().getPhoneNumber())
+                .yearOfBirth(account.getAccountDetail().getYearOfBirth())
+                .build()));
+
         return result;
     }
 
-    public Account loginAccount(String login, String password){
-        return accountDao.findAccountByLoginAndPassword(login, password);
+    public boolean deleteAccount(AccountDto accountDto) {
+        if (validator.validate(accountDto)) {
+            Account account = Account.builder().id(accountDto.getId()).login(accountDto.getLogin()).build();
+            accountDao.delete(account);
+            return true;
+        }
+        return false;
     }
 
-    public void deleteAccount(Account account){
-        accountDao.delete(account);
-    }
-
-    public void deleteAllAccounts(){
+    public void deleteAllAccounts() {
         accountDao.deleteAll();
     }
 
-    public Account updateAccount(Account account){
-        return accountDao.save(account);
+    public AccountDto updateAccount(AccountDto accountDto) {
+        if (validator.validate(accountDto)) {
+            Account account = Account.builder().id(accountDto.getId()).login(accountDto.getLogin())
+                    .password(accountDto.getPassword()).accountDetail(
+                            AccountDetail.builder().firstName(accountDto.getFirstName())
+                                    .lastName(accountDto.getLastName()).email(accountDto.getEmail())
+                                    .phoneNumber(accountDto.getPhoneNumber()).yearOfBirth(accountDto.getYearOfBirth())
+                                    .build()).build();
+
+            account = accountDao.save(account);
+
+            return AccountDto.builder().id(account.getId()).login(account.getLogin())
+                    .password(account.getPassword()).firstName(account.getAccountDetail().getFirstName())
+                    .lastName(account.getAccountDetail().getLastName()).email(account.getAccountDetail().getEmail())
+                    .phoneNumber(account.getAccountDetail().getPhoneNumber())
+                    .yearOfBirth(account.getAccountDetail().getYearOfBirth())
+                    .build();
+        }
+        return new AccountDto();
+    }
+
+    public Account getRawAccount(Integer id) {
+        Account account = accountDao.findById(id).orElse(null);
+        if (account != null)
+            return account;
+
+        return new Account();
     }
 }
+

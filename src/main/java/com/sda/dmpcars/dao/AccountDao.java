@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 public interface AccountDao extends CrudRepository<Account, Integer> {
-    Account findAccountByLoginAndPassword(String login, String password);
+
 }
