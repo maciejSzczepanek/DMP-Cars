@@ -56,13 +56,15 @@ public class AccountService {
         Account account = convertToAccount(accountDto);
         account.setId(accountDto.getId());
         account.setAccountType(AccountType.builder().role(accountDto.getRole()).build());
-        Account result = accountDao.save(account);
-        return convertToAccountDto(result);
+
+        return convertToAccountDto(accountDao.save(account));
     }
 
     public void deleteAccount(AccountDto accountDto) {
         if(validator.validate(accountDto)) {
-            accountDao.delete(convertToAccount(accountDto));
+            Account account = convertToAccount(accountDto);
+            account.setId(accountDto.getId());
+            accountDao.delete(account);
         }
     }
 

@@ -8,10 +8,8 @@ import com.sda.dmpcars.model.Rent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collector;
 
 @Service(value = "rentService")
 public class RentService {
@@ -29,39 +27,52 @@ public class RentService {
 
     public RentDto addRent(RentDto rentDto){
         Rent rent = rentDao.save(convertToRent(rentDto));
-        return converToRentDto(rent);
+        return convertToRentDto(rent);
     }
 
     public RentDto getRentById(Integer id){
         Rent result = rentDao.findById(id).orElse(null);
         if (result != null){
-            return converToRentDto(result);
+            return convertToRentDto(result);
         }
         return new RentDto();
     }
 
     public Set<RentDto> getRentsByAccountId(Integer id){
-        Set<Rent> rents = rentDao.findRentsByAccountId(id);
-
-        if(rents.size() == 0){
-            return new HashSet<>();
-        }
-
         Set<RentDto> result = new HashSet<>();
-        rents.forEach(rent -> result.add(converToRentDto(rent)));
+        rentDao.findRentsByAccountId(id).forEach(rent -> result.add(convertToRentDto(rent)));
+
+        if (result.size() == 0)
+            return new HashSet<>();
+
         return result;
     }
 
     public Set<RentDto> getRentsByCarId(Integer id){
-        Set<Rent> rents = rentDao.findRentsByCarId(id);
-
-        if(rents.size() == 0){
-            return new HashSet<>();
-        }
-
         Set<RentDto> result = new HashSet<>();
-        rents.forEach(rent -> result.add(converToRentDto(rent)));
+        rentDao.findRentsByCarId(id).forEach(rent -> result.add(convertToRentDto(rent)));
+
+        if (result.size() == 0)
+            return new HashSet<>();
+
         return result;
+    }
+
+    public RentDto updateRent(RentDto rentDto){
+        Rent rent = convertToRent(rentDto);
+        rent.setId(rentDto.getId());
+
+        return convertToRentDto(rentDao.save(rent));
+    }
+
+    public void deleteRent(RentDto rentDto){
+        Rent rent = convertToRent(rentDto);
+        rent.setId(rentDto.getId());
+        rentDao.delete(rent);
+    }
+
+    public void deleteAllRents(){
+        rentDao.deleteAll();
     }
 
     /**
@@ -84,7 +95,7 @@ public class RentService {
      * @param rent it's raw from db
      * @return raw rent converted to RentDto
      */
-    private RentDto converToRentDto(Rent rent){
+    private RentDto convertToRentDto(Rent rent){
         return RentDto.builder().id(rent.getId()).fromDate(rent.getFromDate()).toDate(rent.getToDate())
                 .carDto(carService.convertToCarDto(rent.getCar()))
                 .accountDto(accountService.convertToAccountDto(rent.getAccount()))

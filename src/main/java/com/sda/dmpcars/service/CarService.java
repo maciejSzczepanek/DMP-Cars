@@ -46,12 +46,13 @@ public class CarService {
     public CarDto updateCar(CarDto carDto) {
         Car car = convertToCar(carDto);
         car.setId(carDto.getId());
-        Car result = carDao.save(car);
-        return convertToCarDto(result);
+        return convertToCarDto(carDao.save(car));
     }
 
     public void deleteCarById(CarDto carDto) {
-        carDao.delete(convertToCar(carDto));
+        Car car = convertToCar(carDto);
+        car.setId(carDto.getId());
+        carDao.delete(car);
     }
 
     public void deleteAllCars() {
