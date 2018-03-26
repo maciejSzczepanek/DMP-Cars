@@ -1,38 +1,35 @@
 package com.sda.dmpcars.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class AccountDto {
-    private Integer id;
-    private String username;
-    private String password;
-    private String role;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private Date yearOfBirth;
-    private String phoneNumber;
+public class RentDto {
+    private int id;
+    private Date fromDate;
+    private Date toDate;
+    private BigDecimal totalPrice;
+
+    private AccountDto accountDto;
+    private CarDto carDto;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        AccountDto that = (AccountDto) o;
-        return Objects.equals(id, that.id);
+        RentDto rentDto = (RentDto) o;
+        return id == rentDto.id;
     }
 
     @Override

@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Objects;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,4 +29,19 @@ public class CarDto {
     private String type;
     private String regNumber;
     private String regVin;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CarDto carDto = (CarDto) o;
+        return id == carDto.id;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), id);
+    }
 }

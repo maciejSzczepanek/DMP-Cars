@@ -26,10 +26,10 @@ public class Rent implements Serializable {
     private int id;
     @NotNull
     @Temporal(value = TemporalType.DATE)
-    private Date dateFrom;
+    private Date fromDate;
     @NotNull
     @Temporal(value = TemporalType.DATE)
-    private Date dateTo;
+    private Date toDate;
     private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -37,7 +37,7 @@ public class Rent implements Serializable {
     private Car car;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "accountId")
     private Account account;
 
     @Override
@@ -51,7 +51,6 @@ public class Rent implements Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(super.hashCode(), id);
     }
 }

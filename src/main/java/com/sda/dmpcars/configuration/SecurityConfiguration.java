@@ -26,10 +26,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http.csrf().disable();//need to check how to add csrf token to json
         http.authorizeRequests()
                 .antMatchers("/script/**", "/style/**", "/img/**", "/about", "/cars",
-                        "/register", "/", "/index", "/cars/**", "/cars/car")
+                        "/register", "/", "/index", "/cars/**")//, "/cars/car") maybe not needed when posting json to db
                 .permitAll()
                 .antMatchers("/userpanel")
                 .hasRole("USER")
@@ -37,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/index").permitAll()
+                .formLogin().loginPage("/username").defaultSuccessUrl("/index").permitAll()
                 .and()
                 .logout().permitAll();
     }

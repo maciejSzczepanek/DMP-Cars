@@ -29,6 +29,9 @@ public class CarService {
 
         carDao.findAll().forEach(car -> result.add(convertToCarDto(car)));
 
+        if(result.size() == 0)
+            return new HashSet<>();
+
         return result;
     }
 
@@ -55,15 +58,7 @@ public class CarService {
         carDao.deleteAll();
     }
 
-    public Car getRawCar(Integer id) {
-        Car result = carDao.findById(id).orElse(null);
-        if (result != null) {
-            return result;
-        }
-        return new Car();
-    }
-
-    private CarDto convertToCarDto(Car car) {
+    CarDto convertToCarDto(Car car) {
         return CarDto.builder().id(car.getId()).model(car.getModel()).yearOfProduction(car.getYearOfProduction())
                 .capacity(car.getCapacity()).powerKm(car.getPowerKm()).available(car.isAvailable())
                 .price(car.getPrice()).brand(car.getBrand().getName()).color(car.getColor().getName())

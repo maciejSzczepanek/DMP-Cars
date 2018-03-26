@@ -81,13 +81,12 @@ public class Car implements Serializable{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Car car = (Car) o;
-        return Objects.equals(id, car.id) &&
-                Objects.equals(regNumber, car.regNumber);
+        return Objects.equals(id, car.id);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, regNumber);
+        return Objects.hash(super.hashCode(), id);
     }
 }

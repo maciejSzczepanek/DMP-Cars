@@ -10,9 +10,7 @@ import com.sda.dmpcars.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service("accountService")
@@ -47,6 +45,10 @@ public class AccountService {
     public Set<AccountDto> getAllAccounts() {
         Set<AccountDto> result = new HashSet<>();
         accountDao.findAll().forEach(account -> result.add(convertToAccountDto(account)));
+
+        if (result.size() == 0)
+            return new HashSet<>();
+
         return result;
     }
 
@@ -81,17 +83,17 @@ public class AccountService {
         if(accountDto == null){
             return new Account();
         }
-        return Account.builder().username(accountDto.getLogin()).password(accountDto.getPassword()).accountDetail(AccountDetail.builder()
+        return Account.builder().username(accountDto.getUsername()).password(accountDto.getPassword()).accountDetail(AccountDetail.builder()
                 .firstName(accountDto.getFirstName()).lastName(accountDto.getLastName()).email(accountDto.getEmail())
                 .phoneNumber(accountDto.getPhoneNumber()).yearOfBirth(accountDto.getYearOfBirth()).build())
                 .accountType(AccountType.builder().build()).build();
     }
 
-    private AccountDto convertToAccountDto(Account account) {
+    AccountDto convertToAccountDto(Account account) {
         if(account == null){
             return new AccountDto();
         }
-        return AccountDto.builder().id(account.getId()).login(account.getUsername()).password(account.getPassword())
+        return AccountDto.builder().id(account.getId()).username(account.getUsername()).password(account.getPassword())
                 .firstName(account.getAccountDetail().getFirstName()).lastName(account.getAccountDetail().getLastName())
                 .email(account.getAccountDetail().getEmail()).phoneNumber(account.getAccountDetail().getPhoneNumber())
                 .yearOfBirth(account.getAccountDetail().getYearOfBirth()).role(account.getAccountType().getRole()).build();

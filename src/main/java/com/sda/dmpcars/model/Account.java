@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "accounts")
-public class Account implements Serializable{
+public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

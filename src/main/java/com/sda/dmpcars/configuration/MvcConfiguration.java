@@ -20,7 +20,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter implements Applica
         registry.addViewController("/index").setViewName("index");
         registry.addViewController("/about").setViewName("about");
         registry.addViewController("/cars").setViewName("cars");
-        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/username").setViewName("login");
         registry.addViewController("/register").setViewName("register");
         registry.addViewController("/userpanel").setViewName("userpanel");
         registry.addViewController("/adminpanel").setViewName("adminpanel");
