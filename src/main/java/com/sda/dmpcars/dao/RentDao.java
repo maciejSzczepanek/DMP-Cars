@@ -3,10 +3,10 @@ package com.sda.dmpcars.dao;
 import com.sda.dmpcars.model.Rent;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+import java.util.Set;
 
 public interface RentDao extends CrudRepository<Rent, Integer> {
-    List<Rent> findRentByCarId(Integer id);
+    Set<Rent> findRentsByCarId(Integer id);
 
-    List<Rent> findRentByAccountId(Integer id);
+    Set<Rent> findRentsByAccountId(Integer id);
 }

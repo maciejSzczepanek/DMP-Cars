@@ -11,9 +11,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -30,7 +30,8 @@ public class Car implements Serializable{
     @NotNull
     private String model;
     @NotNull
-    private Integer yearOfProduction;
+    @Temporal(TemporalType.DATE)
+    private Date yearOfProduction;
     @NotNull
     private Double capacity;
     @NotNull
@@ -41,38 +42,38 @@ public class Car implements Serializable{
     private BigDecimal price;
 
     @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "brandId")
     private Brand brand;
 
     @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "typeId")
     private Type type;
 
     @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "engineId")
     private Engine engine;
 
     @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "colorId")
     private Color color;
 
     @OneToOne
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
+    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
             org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "regNumberId")
     private RegNumber regNumber;
     
     @JsonIgnore
     @OneToMany(mappedBy = "car")
-    private List<Rent> rents = new ArrayList<>();
+    private Set<Rent> rents;
 
     @Override
     public boolean equals(Object o) {
@@ -80,14 +81,12 @@ public class Car implements Serializable{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Car car = (Car) o;
-        return Objects.equals(id, car.id) &&
-                Objects.equals(regNumber, car.regNumber);
+        return Objects.equals(id, car.id);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id, regNumber);
+        return Objects.hash(super.hashCode(), id);
     }
-
 }

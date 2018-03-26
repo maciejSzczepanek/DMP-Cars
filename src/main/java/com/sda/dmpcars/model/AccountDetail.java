@@ -1,5 +1,6 @@
 package com.sda.dmpcars.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +10,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -25,11 +28,26 @@ public class AccountDetail implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private LocalDate yearOfBirth;
+    @Temporal(value = TemporalType.DATE)
+    private Date yearOfBirth;
     private String phoneNumber;
 
    @OneToOne(mappedBy = "accountDetail")
     private Account account;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AccountDetail that = (AccountDetail) o;
+        return Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName);
+    }
 
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), firstName, lastName);
+    }
 }

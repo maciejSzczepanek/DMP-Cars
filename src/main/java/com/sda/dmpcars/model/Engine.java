@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -25,10 +26,22 @@ public class Engine implements Serializable {
     private Integer id;
     @NotNull
     private String type;
-/*    @NotNull
-    private EngineType engineType;*/
 
     @OneToMany(mappedBy = "engine")
     private List<Car> cars = new ArrayList<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Engine engine = (Engine) o;
+        return Objects.equals(type, engine.type);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), type);
+    }
 }

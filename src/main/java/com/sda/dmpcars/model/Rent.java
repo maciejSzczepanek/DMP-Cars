@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 @Data
@@ -26,10 +26,10 @@ public class Rent implements Serializable {
     private int id;
     @NotNull
     @Temporal(value = TemporalType.DATE)
-    private LocalDate dateFrom;
+    private Date fromDate;
     @NotNull
     @Temporal(value = TemporalType.DATE)
-    private LocalDate dateTo;
+    private Date toDate;
     private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,6 +53,4 @@ public class Rent implements Serializable {
     public int hashCode() {
         return Objects.hash(super.hashCode(), id);
     }
-
 }
-

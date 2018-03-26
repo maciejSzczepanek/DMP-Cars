@@ -6,20 +6,38 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class AccountDto {
     private Integer id;
-    private String login;
+    private String username;
     private String password;
+    private String role;
     private String firstName;
     private String lastName;
     private String email;
-    private String yearOfBirth;
+    private Date yearOfBirth;
     private String phoneNumber;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AccountDto that = (AccountDto) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), id);
+    }
 }
