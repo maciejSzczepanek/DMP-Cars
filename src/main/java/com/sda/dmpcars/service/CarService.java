@@ -49,10 +49,14 @@ public class CarService {
         return convertToCarDto(carDao.save(car));
     }
 
-    public void deleteCarById(CarDto carDto) {
+    public boolean deleteCarById(CarDto carDto) {
+        if(!carDao.existsById(carDto.getId())){
+            return false;
+        }
         Car car = convertToCar(carDto);
         car.setId(carDto.getId());
         carDao.delete(car);
+        return true;
     }
 
     public void deleteAllCars() {
