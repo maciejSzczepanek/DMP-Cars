@@ -26,10 +26,10 @@ public class Rent implements Serializable {
     private int id;
     @NotNull
     @Temporal(value = TemporalType.DATE)
-    private LocalDate dateFrom;
+    private Date fromDate;
     @NotNull
     @Temporal(value = TemporalType.DATE)
-    private LocalDate dateTo;
+    private Date toDate;
     private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -51,7 +51,6 @@ public class Rent implements Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(super.hashCode(), id);
     }
 }

@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 
 @Data
@@ -28,7 +29,7 @@ public class AccountDetail implements Serializable {
     private String lastName;
     private String email;
     @Temporal(value = TemporalType.DATE)
-    private String yearOfBirth;
+    private Date yearOfBirth;
     private String phoneNumber;
 
    @OneToOne(mappedBy = "accountDetail")

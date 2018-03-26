@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>DMP-Cars</title>
+</head>
+<body>
+<div class="main">
+    <div class="main-menu">
+        <ul>
+            <li><a href="/about">About</a></li>
+            <li><a href="/cars">Our cars</a></li>
+            <li><a href="/login">Login</a></li>
+            <div class="logout" th:fragment="logout" sec:authorize="isAuthenticated()">
+                <li><a href="/logout">Logout</a></li>
+            </div>
+            <li><a href="/register">Register new User</a> </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

@@ -6,33 +6,37 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
-public class AccountDto {
-    private Integer id;
-    private String username;
-    private String password;
-    private String role;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private Date yearOfBirth;
-    private String phoneNumber;
+public class CarDto {
+    private int id;
+    private String model;
+    private Date yearOfProduction;
+    private Double capacity;
+    private Integer powerKm;
+    private boolean available;
+    private BigDecimal price;
+    private String brand;
+    private String color;
+    private String engine;
+    private String type;
+    private String regNumber;
+    private String regVin;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        AccountDto that = (AccountDto) o;
-        return Objects.equals(id, that.id);
+        CarDto carDto = (CarDto) o;
+        return id == carDto.id;
     }
 
     @Override
