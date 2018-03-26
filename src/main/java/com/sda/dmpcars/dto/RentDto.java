@@ -15,7 +15,7 @@ import java.util.Objects;
 @Builder
 
 public class RentDto {
-    private int id;
+    private Integer id;
     private Date fromDate;
     private Date toDate;
     private BigDecimal totalPrice;
