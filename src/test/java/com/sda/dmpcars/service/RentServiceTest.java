@@ -49,11 +49,11 @@ public class RentServiceTest {
     }
 
     @Test
-    public void shouldReturnEmptyRentDtoWhenToDateIsNull() {
+    public void shouldReturnEmptyRentDtoWhenTotalPriceIsNull() {
         RentDto expected = new RentDto();
 
         RentDto toSave = getDefaultRentDto();
-        toSave.setToDate(null);
+        toSave.setTotalPrice(null);
 
         RentDto actual = rentService.addRent(toSave);
 
