@@ -11,11 +11,15 @@
         <ul>
             <li><a href="/about">About</a></li>
             <li><a href="/cars">Our cars</a></li>
-            <li><a href="/login">Login</a></li>
-            <div class="logout" th:fragment="logout" sec:authorize="isAuthenticated()">
+            <div th:fragment="login" sec:authorize="isAnonymous()">
+                <li><a href="/login">Login</a></li>
+            </div>
+            <div th:fragment="logout" sec:authorize="isAuthenticated()">
                 <li><a href="/logout">Logout</a></li>
             </div>
-            <li><a href="/register">Register new User</a> </li>
+            <div th:fragment="register" sec:authorize="isAnonymous()">
+                <li><a href="/register">Register new User</a></li>
+            </div>
         </ul>
     </div>
 </div>

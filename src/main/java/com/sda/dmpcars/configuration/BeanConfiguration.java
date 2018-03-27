@@ -1,5 +1,7 @@
 package com.sda.dmpcars.configuration;
 
+import com.sda.dmpcars.security.SimplePasswordEncoder;
+import com.sda.dmpcars.security.UserDetails;
 import com.sda.dmpcars.validator.AccountDtoValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,5 +33,15 @@ public class BeanConfiguration {
         managerDataSource.setUsername(this.username);
         managerDataSource.setPassword(this.password);
         return managerDataSource;
+    }
+
+    @Bean
+    public UserDetails userDetails(){
+        return new UserDetails();
+    }
+
+    @Bean
+    public SimplePasswordEncoder simplePasswordEncoder(){
+        return new SimplePasswordEncoder();
     }
 }

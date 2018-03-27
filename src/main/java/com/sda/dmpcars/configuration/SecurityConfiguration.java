@@ -1,8 +1,11 @@
 package com.sda.dmpcars.configuration;
 
+import com.sda.dmpcars.security.SimplePasswordEncoder;
+import com.sda.dmpcars.security.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,14 +17,17 @@ import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 
 import javax.sql.DataSource;
 
-@Configuration
+
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
     private DataSource dataSource;
+    private UserDetails userDetails;
 
     @Autowired
-    public SecurityConfiguration(DataSource dataSource) {
+    public SecurityConfiguration(DataSource dataSource, UserDetails userDetails) {
         this.dataSource = dataSource;
+        this.userDetails = userDetails;
     }
 
     @Override
@@ -37,16 +43,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/username").defaultSuccessUrl("/index").permitAll()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/index").permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().logoutSuccessUrl("/index").permitAll();
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from public.accounts where username=?")
-                .authoritiesByUsernameQuery("select username, role from public.account_types where username=?");
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetails);
+        authProvider.setPasswordEncoder(new SimplePasswordEncoder());
+        auth.authenticationProvider(authProvider);
     }
 }
