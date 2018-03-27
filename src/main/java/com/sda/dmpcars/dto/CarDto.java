@@ -16,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarDto {
-    private int id;
+    private Integer id;
     private String model;
     private Date yearOfProduction;
     private Double capacity;
