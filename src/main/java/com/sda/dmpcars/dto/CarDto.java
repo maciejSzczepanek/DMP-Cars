@@ -16,7 +16,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CarDto {
-    private int id;
+    private Integer id;
     private String model;
     private Date yearOfProduction;
     private Double capacity;
@@ -36,12 +36,12 @@ public class CarDto {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         CarDto carDto = (CarDto) o;
-        return id == carDto.id;
+        return this.id == carDto.id;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id);
+        return Objects.hash(super.hashCode(), this.id);
     }
 }
