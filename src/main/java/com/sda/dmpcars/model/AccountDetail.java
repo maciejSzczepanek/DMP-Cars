@@ -39,7 +39,6 @@ public class AccountDetail implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         AccountDetail that = (AccountDetail) o;
         return Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName);
@@ -48,6 +47,6 @@ public class AccountDetail implements Serializable {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), firstName, lastName);
+        return Objects.hash(firstName, lastName);
     }
 }

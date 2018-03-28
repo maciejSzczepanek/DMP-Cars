@@ -34,7 +34,6 @@ public class Engine implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         Engine engine = (Engine) o;
         return Objects.equals(type, engine.type);
     }
@@ -42,6 +41,6 @@ public class Engine implements Serializable {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), type);
+        return Objects.hash( type);
     }
 }

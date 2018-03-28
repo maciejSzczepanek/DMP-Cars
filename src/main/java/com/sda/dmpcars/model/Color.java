@@ -34,7 +34,6 @@ public class Color implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         Color color = (Color) o;
         return Objects.equals(name, color.name);
     }
@@ -42,6 +41,6 @@ public class Color implements Serializable {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), name);
+        return Objects.hash( name);
     }
 }

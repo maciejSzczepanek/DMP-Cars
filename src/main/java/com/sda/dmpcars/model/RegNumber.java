@@ -37,7 +37,6 @@ public class RegNumber implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         RegNumber regNumber = (RegNumber) o;
         return Objects.equals(number, regNumber.number) &&
                 Objects.equals(vin, regNumber.vin);
@@ -46,6 +45,6 @@ public class RegNumber implements Serializable {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), number, vin);
+        return Objects.hash( number, vin);
     }
 }

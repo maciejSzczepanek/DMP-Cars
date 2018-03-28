@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>DMP-Cars</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" th:src="'https://code.jquery.com/jquery-3.3.1.js'"></script>
 </head>
 <body>
+<script>
+    $(document).ready(function(){
+        $.get("/cars/cars", function (data) {
+            ``
+        });
+    });
+</script>
 <div class="main">
 
     <div class="main-cars">
