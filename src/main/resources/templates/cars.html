@@ -9,7 +9,25 @@
 <script>
     $(document).ready(function(){
         $.get("/cars/cars", function (data) {
-            ``
+            let display = "";
+            for(let i = 0; i < data.length; i++){
+                let modelLine = "Model: " + data[i].model;
+                let yearOfProductionLine = "Year of production: " + data[i].yearOfProduction;
+                let capacityLine = "Capacity: " + data[i].capacity;
+                let powerKmLine = "PowerKM: " + data[i].powerKm;
+                let availableLine = "Available: " + data[i].available;
+                let priceLine = "Price: " + data[i].price;
+                let brandLine = "Brand: " + data[i].brand;
+                let colorLine = "Color: " + data[i].color;
+                let engineLine = "Engine: " + data[i].engine;
+                let typeLine = "Type: " + data[i].type;
+                let regNumberLine = "RegNumber: " + data[i].regNumber;
+                display = display +"<br/>" + modelLine +"<br/>"+ yearOfProductionLine +"<br/>"+ capacityLine +"<br/>" +
+                powerKmLine +"<br/>" + availableLine +"<br/>"+ priceLine +"<br/>"+ brandLine +"<br/>"+ colorLine
+                    +"<br/>"+ engineLine +"<br/>"+ typeLine +"<br/>"+ regNumberLine;
+
+            }
+            $("#carDisplay").append(display);
         });
     });
 </script>

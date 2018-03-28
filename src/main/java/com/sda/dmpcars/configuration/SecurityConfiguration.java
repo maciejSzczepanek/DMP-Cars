@@ -36,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();//need to check how to add csrf token to json
         http.authorizeRequests()
                 .antMatchers("/script/**", "/style/**", "/img/**", "/about", "/cars",
-                        "/register", "/", "/index", "/cars/{0-9}+")
+                        "/register", "/", "/index", "/cars/{\\d}")
                 .permitAll()
                 .antMatchers("/userpanel")
                 .hasRole("USER")

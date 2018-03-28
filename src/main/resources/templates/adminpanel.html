@@ -1,10 +1,90 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
     <title>DMP-Cars</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" th:src="'https://code.jquery.com/jquery-3.3.1.js'"></script>
+
 </head>
 <body>
+<div class="main">
 
+    <div class="add-car">
+
+        <form id="addCar">
+            <label for="model">Model<input type="text" id="model" name="model"></label>
+            <br/>
+            <label for="yearOfProduction">Year of production<input type="date" name="yearOfProduction"
+                                                                   id="yearOfProduction"></label>
+            <br/>
+            <label for="capacity">Capacity<input type="text" name="capacity" id="capacity"></label>
+            <br/>
+            <label for="powerKm">Power KM<input type="text" name="powerKm" id="powerKm"></label>
+            <br/>
+            <label for="price">Price<input type="text" name="price" id="price"></label>
+            <br/>
+            <label for="brand">Brand<input type="text" name="brand" id="brand"></label>
+            <br/>
+            <label for="color">Color<input type="text" name="color" id="color"></label>
+            <br/>
+            <label for="engine">Engine<input type="text" name="engine" id="engine"></label>
+            <br/>
+            <label for="type">Type<input type="text" name="type" id="type"></label>
+            <br/>
+            <label for="regNumber">Registry number<input type="text" name="regNumber" id="regNumber"></label>
+            <br/>
+            <label for="regVin">VIN<input type="text" name="regVin" id="regVin"></label>
+            <br/>
+            <input type="submit" id="submit" name="submit" value="Add Car">
+        </form>
+        <script>
+            $("#addCar").submit(function (event) {
+                event.preventDefault();
+                let $form = $(this);
+                let model = $form.find("input[name='model']").val();
+                let yeafOfProduction = $form.find("input[name='yearOfProduction']").val();
+                let capacity = $form.find("input[name='capacity']").val();
+                let powerKm = $form.find("input[name='powerKm']").val();
+                let available = true;
+                let price = $form.find("input[name='price']").val();
+                let brand = $form.find("input[name='brand']").val();
+                let color = $form.find("input[name='color']").val();
+                let engine = $form.find("input[name='engine']").val();
+                let type = $form.find("input[name='type']").val();
+                let regNumber = $form.find("input[name='regNumber']").val();
+                let regVin = $form.find("input[name='regVin']").val();
+
+                let dataToSend = {
+                    "model": model,
+                    "yearOfProduction": yeafOfProduction,
+                    "capacity": capacity,
+                    "powerKm": powerKm,
+                    "available": available,
+                    "price": price,
+                    "brand": brand,
+                    "color": color,
+                    "engine": engine,
+                    "type": type,
+                    "regNumber": regNumber,
+                    "regVin": regVin
+                }
+                console.log(dataToSend);
+                $.ajax({
+                    type: "POST",
+                    url: "/cars/car",
+                    data: JSON.stringify(dataToSend),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+
+                }).fail(function (data) {
+                    console.log(data);
+                });
+            });
+        </script>
+
+    </div>
+
+</div>
 </body>
 </html>
