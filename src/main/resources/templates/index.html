@@ -20,7 +20,15 @@
             <div th:fragment="register" sec:authorize="isAnonymous()">
                 <li><a href="/register">Register new User</a></li>
             </div>
+            <div th:fragment="adminpanel" sec:authorize="hasRole('ADMIN')">
+                <a href="/adminpanel">Admin panel</a>
+            </div>
         </ul>
+    </div>
+
+    <div sec:authorize="isAuthenticated()">
+        username <span sec:authentication="name"></span>
+        roles <span sec:authentication="principal.authorities"></span>
     </div>
 </div>
 </body>

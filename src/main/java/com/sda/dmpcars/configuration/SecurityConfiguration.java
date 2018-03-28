@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
@@ -35,11 +36,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable();//need to check how to add csrf token to json
         http.authorizeRequests()
                 .antMatchers("/script/**", "/style/**", "/img/**", "/about", "/cars",
-                        "/register", "/", "/index", "/cars/**")//, "/cars/car") maybe not needed when posting json to db
+                        "/register", "/", "/index", "/cars/{0-9}+")
                 .permitAll()
                 .antMatchers("/userpanel")
                 .hasRole("USER")
-                .antMatchers("/adminpanel", "/userpanel")
+                .antMatchers("/adminpanel", "/userpanel", "/cars/car")
                 .hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()

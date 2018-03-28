@@ -47,4 +47,9 @@ public class AccountType implements Serializable {
 
         return Objects.hash(super.hashCode(), role);
     }
+
+    @Override
+    public String toString() {
+        return role;
+    }
 }
