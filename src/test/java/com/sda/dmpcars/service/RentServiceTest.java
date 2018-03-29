@@ -11,27 +11,29 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.mockito.MockitoAnnotations.initMocks;
 
-@RunWith(SpringRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class RentServiceTest {
 
     @Mock
     RentDao rentDao;
 
     private RentService rentService;
-    private CarService carService;
-    private AccountService accountService;
 
     @Before
     public void setUp() {
         initMocks(this);
-        rentService = new RentService(rentDao, carService, accountService);
+        rentService = new RentService(rentDao);
     }
 
     @Test
@@ -45,7 +47,118 @@ public class RentServiceTest {
         RentDto actual = rentService.addRent(expected);
 
         Assert.assertEquals(expected, actual);
-        Mockito.verify(rentDao, Mockito.timeout(1)).save(Mockito.any(Rent.class));
+        Mockito.verify(rentDao, Mockito.times(1)).save(Mockito.any(Rent.class));
+    }
+
+    @Test
+    public void shouldGetRentHappyPath() {
+        RentDto excpected = getDefaultRentDto();
+
+        Rent rentReturnedFromDb = getDefaultRent(1);
+
+        Mockito.when(rentDao.findById(1)).thenReturn(Optional.of(rentReturnedFromDb));
+
+        RentDto actual = rentService.getRentById(1);
+
+        Assert.assertEquals(excpected, actual);
+        Mockito.verify(rentDao, Mockito.times(1)).findById(1);
+    }
+
+    @Test
+    public void shouldUpdateRentHappyPath() {
+        RentDto expected = getDefaultRentDto();
+        Rent returnedFromDb = getDefaultRent(1);
+
+        Mockito.when(rentDao.save(Mockito.any(Rent.class))).thenReturn(returnedFromDb);
+
+        RentDto actual = rentService.updateRent(expected);
+
+        Assert.assertEquals(expected, actual);
+
+        Mockito.verify(rentDao, Mockito.times(1)).save(Mockito.any(Rent.class));
+    }
+
+    @Test
+    public void shouldDeleteRentHappyPath() {
+        RentDto rentToDelete = getDefaultRentDto();
+        boolean expected = true;
+
+        Mockito.when(rentDao.existsById(1)).thenReturn(true);
+
+        boolean actual = rentService.deleteRentById(rentToDelete);
+
+        Assert.assertEquals(expected, actual);
+        Mockito.verify(rentDao, Mockito.times(1)).existsById(1);
+    }
+
+    @Test
+    public void shouldGetAllRentsByCarHappyPath() {
+        Set<RentDto> expected = new HashSet<>();
+        expected.add(getDefaultRentDto());
+
+        Set<Rent> rentsReturnedFromDb = new HashSet<>();
+        rentsReturnedFromDb.add(Rent
+                .builder()
+                .id(1)
+                .car(Car
+                        .builder()
+                        .id(1)
+                        .brand(Brand.builder().build())
+                        .color(Color.builder().build())
+                        .engine(Engine.builder().build())
+                        .type(Type.builder().build())
+                        .regNumber(RegNumber.builder().build())
+                        .build())
+                .build()
+        );
+
+        Mockito.when(rentDao.findRentsByCarId(1)).thenReturn(rentsReturnedFromDb);
+
+        Set<RentDto> actual = rentService.getRentsByCarId(1);
+        Assert.assertEquals(expected, actual);
+
+        Mockito.verify(rentDao, Mockito.times(1)).findRentsByCarId(1);
+    }
+
+    @Test
+    public void shouldGetAllRentsByAccountHappyPath() {
+        Set<RentDto> expected = new HashSet<>();
+        expected.add(getDefaultRentDto());
+
+        Set<Rent> rentsReturnedFromDb = new HashSet<>();
+        rentsReturnedFromDb.add(Rent
+                .builder()
+                .id(1)
+                .account(Account
+                        .builder()
+                        .accountType(AccountType.builder().build())
+                        .accountDetail(AccountDetail.builder().build())
+                        .build())
+                .build()
+        );
+
+        Mockito.when(rentDao.findRentsByAccountId(1)).thenReturn(rentsReturnedFromDb);
+
+        Set<RentDto> actual = rentService.getRentsByAccountId(1);
+        Assert.assertEquals(expected, actual);
+
+        Mockito.verify(rentDao, Mockito.times(1)).findRentsByAccountId(1);
+    }
+
+    @Test
+    public void shouldReturnEmptyRentDtoWhenSetSizeIsZero() {
+        Set<RentDto> expected = new HashSet<>();
+        Set<RentDto> actual = rentService.getRentsByCarId(1);
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldReturnEmptyRentDtoWhenIdNumberIsWrong() {
+        RentDto expected = new RentDto();
+        RentDto actual = rentService.getRentById(1);
+
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
@@ -85,50 +198,26 @@ public class RentServiceTest {
         rent.setFromDate(Date.valueOf("2000-1-1"));
         rent.setToDate(Date.valueOf("2000-2-2"));
         rent.setTotalPrice(BigDecimal.valueOf(10));
-        rent.setCar(Car
-                .builder()
-                .brand(Brand
-                        .builder()
-                        .name("brand")
-                        .build())
-                .model("model")
-                .build());
-        rent.setAccount(Account
-                .builder()
-                .accountType(AccountType
-                        .builder()
-                        .role("role")
-                        .build())
-                .build());
 
         return rent;
     }
 
-    @Test
-    public void getRentsByCarId() {
+    private Rent getAllDefaultRents() {
+        return Rent
+                .builder()
+                .id(1)
+                .fromDate(Date.valueOf("2000-1-1"))
+                .toDate(Date.valueOf("2000-2-2"))
+                .totalPrice(BigDecimal.valueOf(10))
+                .car(Car
+                        .builder()
+                        .id(1)
+                        .build())
+                .account(Account
+                        .builder()
+                        .id(1)
+                        .build())
+                .build();
     }
 
-    @Test
-    public void getRentsByAccountId() {
-    }
-
-    @Test
-    public void getRentById() {
-    }
-
-    @Test
-    public void addRent() {
-    }
-
-    @Test
-    public void updateRent() {
-    }
-
-    @Test
-    public void deleteRent() {
-    }
-
-    @Test
-    public void deleteAllRents() {
-    }
 }

@@ -60,12 +60,14 @@ public class AccountService {
         return convertToAccountDto(accountDao.save(account));
     }
 
-    public void deleteAccount(AccountDto accountDto) {
-        if (validator.validate(accountDto)) {
-            Account account = convertToAccount(accountDto);
-            account.setId(accountDto.getId());
-            accountDao.delete(account);
+    public boolean deleteAccount(AccountDto accountDto) {
+        if (!accountDao.existsById(accountDto.getId())) {
+            return false;
         }
+        Account account = convertToAccount(accountDto);
+        account.setId(accountDto.getId());
+        accountDao.delete(account);
+        return true;
     }
 
     public void deleteAllAccounts() {

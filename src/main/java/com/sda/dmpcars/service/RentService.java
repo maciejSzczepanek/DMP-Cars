@@ -1,10 +1,10 @@
 package com.sda.dmpcars.service;
 
 import com.sda.dmpcars.dao.RentDao;
+import com.sda.dmpcars.dto.AccountDto;
+import com.sda.dmpcars.dto.CarDto;
 import com.sda.dmpcars.dto.RentDto;
-import com.sda.dmpcars.model.Account;
-import com.sda.dmpcars.model.Car;
-import com.sda.dmpcars.model.Rent;
+import com.sda.dmpcars.model.*;
 import com.sda.dmpcars.validator.RentDtoValidator;
 import com.sda.dmpcars.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +17,13 @@ import java.util.Set;
 public class RentService {
 
     private final RentDao rentDao;
-    private final CarService carService;
-    private final AccountService accountService;
+
     private final Validator<RentDto> validator = new RentDtoValidator();
 
     @Autowired
-    public RentService(RentDao rentDao, CarService carService, AccountService accountService) {
+    public RentService(RentDao rentDao) {
         this.rentDao = rentDao;
-        this.carService = carService;
-        this.accountService = accountService;
+
     }
 
     public RentDto addRent(RentDto rentDto) {
@@ -58,8 +56,10 @@ public class RentService {
         Set<RentDto> result = new HashSet<>();
         rentDao.findRentsByCarId(id).forEach(rent -> result.add(convertToRentDto(rent)));
 
-        if (result.size() == 0)
+        if (result.size() == 0) {
             return new HashSet<>();
+        }
+
 
         return result;
     }
@@ -118,8 +118,48 @@ public class RentService {
                 .id(rent.getId())
                 .fromDate(rent.getFromDate())
                 .toDate(rent.getToDate())
-                .carDto(carService.convertToCarDto(rent.getCar()))
-                .accountDto(accountService.convertToAccountDto(rent.getAccount()))
+                .carDto(convertToCarDto(rent.getCar()))
+                .accountDto(convertToAccountDto(rent.getAccount()))
+                .build();
+    }
+
+    CarDto convertToCarDto(Car car) {
+        if (car == null) {
+            return new CarDto();
+        }
+        return CarDto
+                .builder()
+                .id(car.getId())
+                .model(car.getModel())
+                .yearOfProduction(car.getYearOfProduction())
+                .capacity(car.getCapacity())
+                .powerKm(car.getPowerKm())
+                .available(car.isAvailable())
+                .price(car.getPrice())
+                .brand(car.getBrand().getName())
+                .color(car.getColor().getName())
+                .engine(car.getEngine().getType())
+                .type(car.getType().getName())
+                .regNumber(car.getRegNumber().getNumber())
+                .regVin(car.getRegNumber().getVin())
+                .build();
+    }
+
+    AccountDto convertToAccountDto(Account account) {
+        if (account == null) {
+            return new AccountDto();
+        }
+        return AccountDto
+                .builder()
+                .id(account.getId())
+                .username(account.getUsername())
+                .password(account.getPassword())
+                .firstName(account.getAccountDetail().getFirstName())
+                .lastName(account.getAccountDetail().getLastName())
+                .email(account.getAccountDetail().getEmail())
+                .phoneNumber(account.getAccountDetail().getPhoneNumber())
+                .yearOfBirth(account.getAccountDetail().getYearOfBirth())
+                .role(account.getAccountType().getRole())
                 .build();
     }
 }
