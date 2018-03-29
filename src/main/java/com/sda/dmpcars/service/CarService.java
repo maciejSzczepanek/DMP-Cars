@@ -3,6 +3,8 @@ package com.sda.dmpcars.service;
 import com.sda.dmpcars.dao.CarDao;
 import com.sda.dmpcars.dto.CarDto;
 import com.sda.dmpcars.model.*;
+import com.sda.dmpcars.validator.CarDtoVallidator;
+import com.sda.dmpcars.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.Set;
 public class CarService {
 
     private final CarDao carDao;
+    private final Validator<CarDto> validator = new CarDtoVallidator();
 
     @Autowired
     public CarService(CarDao carDao) {
@@ -20,8 +23,11 @@ public class CarService {
     }
 
     public CarDto addCar(CarDto carDto) {
-        Car result = carDao.save(convertToCar(carDto));
-        return convertToCarDto(result);
+        if (validator.validate(carDto)) {
+            Car result = carDao.save(convertToCar(carDto));
+            return convertToCarDto(result);
+        }
+        return new CarDto();
     }
 
     public Set<CarDto> getAllCars() {
@@ -29,7 +35,7 @@ public class CarService {
 
         carDao.findAll().forEach(car -> result.add(convertToCarDto(car)));
 
-        if(result.size() == 0)
+        if (result.size() == 0)
             return new HashSet<>();
 
         return result;
@@ -50,13 +56,16 @@ public class CarService {
     }
 
     public boolean deleteCarById(CarDto carDto) {
-        if(!carDao.existsById(carDto.getId())){
+        if (!carDao.existsById(carDto.getId())) {
             return false;
         }
-        Car car = convertToCar(carDto);
-        car.setId(carDto.getId());
-        carDao.delete(car);
-        return true;
+        if(validator.validate(carDto)) {
+            Car car = convertToCar(carDto);
+            car.setId(carDto.getId());
+            carDao.delete(car);
+            return true;
+        }
+        return false;
     }
 
     public void deleteAllCars() {
