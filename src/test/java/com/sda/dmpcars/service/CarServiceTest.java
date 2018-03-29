@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -60,20 +61,80 @@ public class CarServiceTest {
     }
     @Test
     public void shouldReturnSetOfCarsHappyPath(){
-        Set<CarDto> expected = new HashSet<>();
+        Set<CarDto>expected = new HashSet<>();
         expected.add(getDefaultCarDto());
 
-        Set<Car> setCarsFromDb = new HashSet<>();
+        Set<Car>setCarsFromDb = new HashSet<>();
         setCarsFromDb.add(getDefaultCar(1));
 
         Mockito.when(carDao.findAll()).thenReturn(setCarsFromDb);
 
-        Set<CarDto> actual = carService.getAllCars();
+        Set<CarDto>actual = carService.getAllCars();
+
+        Assert.assertEquals(expected,actual);
+        Mockito.verify(carDao,Mockito.timeout(1)).findAll();
+    }
+
+    @Test
+    public void shouldReturnEmptySetCarsDtoWhenSizeOfSetIsZero(){
+        Set<CarDto> expected = new HashSet<>();
+
+        Set<CarDto>actual = carService.getAllCars();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldGetCarHappyPath(){
+        CarDto expected = getDefaultCarDto();
+
+        Car carReturnedFromDb = getDefaultCar(1);
+
+        Mockito.when(carDao.findById(1)).thenReturn(Optional.of(carReturnedFromDb));
+
+        CarDto actual = carService.getCarById(1);
+
+        Assert.assertEquals(expected,actual);
+        Mockito.verify(carDao,Mockito.timeout(1)).findById(1);
+    }
+
+    @Test
+    public void shouldReturnEmptyCarDtoWhenIdNumberIsWrong(){
+        CarDto expected = new CarDto();
+
+        CarDto actual = carService.getCarById(1);
+
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void shouldUpdateCarHappyPath(){
+        CarDto expected = getDefaultCarDto();
+
+        Car carReturnedFromDb = getDefaultCar(1);
+
+        Mockito.when(carDao.save(Mockito.any(Car.class))).thenReturn(carReturnedFromDb);
+
+        CarDto actual = carService.updateCar(expected);
 
         Assert.assertEquals(expected,actual);
         Mockito.verify(carDao,Mockito.timeout(1)).save(Mockito.any(Car.class));
-
     }
+
+    @Test
+    public void shouldDeleteCarHappyPath(){
+        CarDto carToDelete = getDefaultCarDto();
+        boolean expected = true;
+
+        Mockito.when(carDao.existsById(1)).thenReturn(true);
+        Mockito.doNothing().when(carDao).deleteById(1);
+
+        boolean actual = carService.deleteCarById(carToDelete);
+
+         Assert.assertEquals(expected, actual);
+         Mockito.verify(carDao,Mockito.timeout(1)).existsById(1);
+    }
+
 
     private CarDto getDefaultCarDto() {
         return CarDto.builder().price(new BigDecimal(20_000))
