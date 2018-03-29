@@ -127,7 +127,6 @@ public class CarServiceTest {
         boolean expected = true;
 
         Mockito.when(carDao.existsById(1)).thenReturn(true);
-        Mockito.doNothing().when(carDao).deleteById(1);
 
         boolean actual = carService.deleteCarById(carToDelete);
 
@@ -137,25 +136,35 @@ public class CarServiceTest {
 
 
     private CarDto getDefaultCarDto() {
-        return CarDto.builder().price(new BigDecimal(20_000))
-                .available(true).powerKm(150).color("red")
-                .model("golf").brand("vw").capacity(1.4)
-                .regNumber("KR 777").engine("petrol").regVin("vin").id(1).type("combi").build();
+        return CarDto
+                .builder()
+                .price(new BigDecimal(20_000))
+                .available(true)
+                .powerKm(150).color("red")
+                .model("golf")
+                .brand("vw").capacity(1.4)
+                .regNumber("KR 777")
+                .engine("petrol")
+                .regVin("vin")
+                .id(1)
+                .type("combi")
+                .build();
     }
 
     private Car getDefaultCar(Integer id) {
         Car car = new Car();
         car.setAvailable(true);
-        car.setBrand(Brand.builder().name("vw").build());
+        car.setBrand("vw");
         car.setCapacity(1.4);
         car.setModel("golf");
-        car.setColor(Color.builder().name("red").build());
+        car.setColor("red");
         car.setPowerKm(150);
         car.setPrice(new BigDecimal(20_000));
-        car.setRegNumber(RegNumber.builder().vin("vin").number("KR 777").build());
-        car.setEngine(Engine.builder().type("petrol").build());
+        car.setRegNumber("vin");
+        car.setRegNumber("KR 777");
+        car.setEngine("petrol");
         car.setId(id);
-        car.setType(Type.builder().name("combi").build());
+        car.setType("combi");
 
         return car;
     }

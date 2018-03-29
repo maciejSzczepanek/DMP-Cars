@@ -10,6 +10,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,17 +31,14 @@ public class Account implements Serializable {
     @NotNull
     private String password;
     private boolean enabled;
-    @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
-            org.hibernate.annotations.CascadeType.ALL})
-    @JoinColumn(name = "accountTypeId")
-    private AccountType accountType;
-
-    @OneToOne
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST,
-            org.hibernate.annotations.CascadeType.ALL})
-    @JoinColumn(name = "accountDetailId")
-    private AccountDetail accountDetail;
+    @NotNull
+    private String accountType;
+    private String firstName;
+    private String lastName;
+    private String email;
+    @Temporal(value = TemporalType.DATE)
+    private Date yearOfBirth;
+    private String phoneNumber;
 
     @JsonIgnore
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)

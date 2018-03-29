@@ -40,36 +40,18 @@ public class Car implements Serializable{
     private boolean available;
     @NotNull
     private BigDecimal price;
-
-    @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
-            org.hibernate.annotations.CascadeType.ALL})
-    @JoinColumn(name = "brandId")
-    private Brand brand;
-
-    @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
-            org.hibernate.annotations.CascadeType.ALL})
-    @JoinColumn(name = "typeId")
-    private Type type;
-
-    @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
-            org.hibernate.annotations.CascadeType.ALL})
-    @JoinColumn(name = "engineId")
-    private Engine engine;
-
-    @ManyToOne
-    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
-            org.hibernate.annotations.CascadeType.ALL})
-    @JoinColumn(name = "colorId")
-    private Color color;
-
-    @OneToOne
-    @Cascade({org.hibernate.annotations.CascadeType.MERGE ,org.hibernate.annotations.CascadeType.PERSIST,
-            org.hibernate.annotations.CascadeType.ALL})
-    @JoinColumn(name = "regNumberId")
-    private RegNumber regNumber;
+    @NotNull
+    private String brand;
+    @NotNull
+    private String type;
+    @NotNull
+    private String engine;
+    @NotNull
+    private String color;
+    @NotNull
+    private String regNumber;
+    @NotNull
+    private String regVin;
     
     @JsonIgnore
     @OneToMany(mappedBy = "car")

@@ -3,8 +3,6 @@ package com.sda.dmpcars.service;
 import com.sda.dmpcars.dao.AccountDao;
 import com.sda.dmpcars.dto.AccountDto;
 import com.sda.dmpcars.model.Account;
-import com.sda.dmpcars.model.AccountDetail;
-import com.sda.dmpcars.model.AccountType;
 import com.sda.dmpcars.validator.AccountDtoValidator;
 import com.sda.dmpcars.validator.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,7 @@ public class AccountService {
     public AccountDto addAccount(AccountDto accountDto) {
         if(validator.validate(accountDto)) {
             Account account = convertToAccount(accountDto);
-            account.setAccountType(AccountType.builder().role("USER").build());
+            account.setAccountType("USER");
             Account result = accountDao.save(account);
             return convertToAccountDto(result);
         }
@@ -55,7 +53,7 @@ public class AccountService {
     public AccountDto updateAccount(AccountDto accountDto){
         Account account = convertToAccount(accountDto);
         account.setId(accountDto.getId());
-        account.setAccountType(AccountType.builder().role(accountDto.getRole()).build());
+        account.setAccountType(accountDto.getAccountType());
 
         return convertToAccountDto(accountDao.save(account));
     }
@@ -85,20 +83,31 @@ public class AccountService {
         if(accountDto == null){
             return new Account();
         }
-        return Account.builder().username(accountDto.getUsername()).password(accountDto.getPassword()).accountDetail(AccountDetail.builder()
-                .firstName(accountDto.getFirstName()).lastName(accountDto.getLastName()).email(accountDto.getEmail())
-                .phoneNumber(accountDto.getPhoneNumber()).yearOfBirth(accountDto.getYearOfBirth()).build())
-                .accountType(AccountType.builder().build()).build();
+        return Account.builder()
+                .username(accountDto.getUsername())
+                .password(accountDto.getPassword())
+                .firstName(accountDto.getFirstName())
+                .lastName(accountDto.getLastName())
+                .email(accountDto.getEmail())
+                .phoneNumber(accountDto.getPhoneNumber())
+                .yearOfBirth(accountDto.getYearOfBirth())
+                .accountType(accountDto.getAccountType()).build();
     }
 
     AccountDto convertToAccountDto(Account account) {
         if(account == null){
             return new AccountDto();
         }
-        return AccountDto.builder().id(account.getId()).username(account.getUsername()).password(account.getPassword())
-                .firstName(account.getAccountDetail().getFirstName()).lastName(account.getAccountDetail().getLastName())
-                .email(account.getAccountDetail().getEmail()).phoneNumber(account.getAccountDetail().getPhoneNumber())
-                .yearOfBirth(account.getAccountDetail().getYearOfBirth()).role(account.getAccountType().getRole()).build();
+        return AccountDto.builder()
+                .id(account.getId())
+                .username(account.getUsername())
+                .password(account.getPassword())
+                .firstName(account.getFirstName())
+                .lastName(account.getLastName())
+                .email(account.getEmail())
+                .phoneNumber(account.getPhoneNumber())
+                .yearOfBirth(account.getYearOfBirth())
+                .accountType(account.getAccountType()).build();
     }
 }
 

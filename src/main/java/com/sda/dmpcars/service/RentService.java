@@ -82,11 +82,19 @@ public class RentService {
      * @return RentDao converted to Rent
      */
     private Rent convertToRent(RentDto rentDto){
-        return Rent.builder().fromDate(rentDto.getFromDate()).toDate(rentDto.getToDate())
+        return Rent.builder()
+                .fromDate(rentDto.getFromDate())
+                .toDate(rentDto.getToDate())
                 .totalPrice(rentDto.getTotalPrice())
-                .account(Account.builder().id(rentDto.getAccountDto().getId()).username(rentDto.getAccountDto().getUsername())
+                .account(Account
+                        .builder()
+                        .id(rentDto.getAccountDto().getId())
+                        .username(rentDto.getAccountDto().getUsername())
                         .build())
-                .car(Car.builder().id(rentDto.getCarDto().getId()).build())
+                .car(Car
+                        .builder()
+                        .id(rentDto.getCarDto().getId())
+                        .build())
                 .build();
     }
 
@@ -96,7 +104,11 @@ public class RentService {
      * @return raw rent converted to RentDto
      */
     private RentDto convertToRentDto(Rent rent){
-        return RentDto.builder().id(rent.getId()).fromDate(rent.getFromDate()).toDate(rent.getToDate())
+        return RentDto
+                .builder()
+                .id(rent.getId())
+                .fromDate(rent.getFromDate())
+                .toDate(rent.getToDate())
                 .carDto(carService.convertToCarDto(rent.getCar()))
                 .accountDto(accountService.convertToAccountDto(rent.getAccount()))
                 .build();

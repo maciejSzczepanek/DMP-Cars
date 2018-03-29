@@ -20,7 +20,6 @@ import java.util.Objects;
 @Table(name = "rents")
 public class Rent implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
