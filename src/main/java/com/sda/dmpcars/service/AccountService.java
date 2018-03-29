@@ -23,7 +23,7 @@ public class AccountService {
     }
 
     public AccountDto addAccount(AccountDto accountDto) {
-        if(validator.validate(accountDto)) {
+        if (validator.validate(accountDto)) {
             Account account = convertToAccount(accountDto);
             account.setAccountType("USER");
             Account result = accountDao.save(account);
@@ -34,7 +34,7 @@ public class AccountService {
 
     public AccountDto getAccountById(Integer id) {
         Account account = accountDao.findById(id).orElse(null);
-        if (account != null){
+        if (account != null) {
             return convertToAccountDto(account);
         }
         return new AccountDto();
@@ -58,12 +58,14 @@ public class AccountService {
         return convertToAccountDto(accountDao.save(account));
     }
 
-    public void deleteAccount(AccountDto accountDto) {
-        if(validator.validate(accountDto)) {
-            Account account = convertToAccount(accountDto);
-            account.setId(accountDto.getId());
-            accountDao.delete(account);
+    public boolean deleteAccount(AccountDto accountDto) {
+        if (!accountDao.existsById(accountDto.getId())) {
+            return false;
         }
+        Account account = convertToAccount(accountDto);
+        account.setId(accountDto.getId());
+        accountDao.delete(account);
+        return true;
     }
 
     public void deleteAllAccounts() {
@@ -73,14 +75,14 @@ public class AccountService {
 
     public Account getRawAccount(Integer id) {
         Account account = accountDao.findById(id).orElse(null);
-        if(account != null){
+        if (account != null) {
             return account;
         }
         return new Account();
     }
 
     private Account convertToAccount(AccountDto accountDto) {
-        if(accountDto == null){
+        if (accountDto == null) {
             return new Account();
         }
         return Account.builder()
@@ -95,7 +97,7 @@ public class AccountService {
     }
 
     AccountDto convertToAccountDto(Account account) {
-        if(account == null){
+        if (account == null) {
             return new AccountDto();
         }
         return AccountDto.builder()
