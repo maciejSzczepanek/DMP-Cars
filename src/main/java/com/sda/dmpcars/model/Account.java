@@ -32,7 +32,7 @@ public class Account implements Serializable {
     private String password;
     private boolean enabled;
     @NotNull
-    private String accountType;
+    private String role;
     private String firstName;
     private String lastName;
     private String email;

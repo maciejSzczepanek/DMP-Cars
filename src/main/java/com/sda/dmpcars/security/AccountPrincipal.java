@@ -20,7 +20,7 @@ public class AccountPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> roles = new ArrayList<>();
-        roles.add(new SimpleGrantedAuthority(account.getAccountType()));
+        roles.add(new SimpleGrantedAuthority(account.getRole()));
         return roles;
     }
 

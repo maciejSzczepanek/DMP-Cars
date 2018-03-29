@@ -102,12 +102,6 @@ public class RentServiceTest {
                 .id(1)
                 .car(Car
                         .builder()
-                        .id(1)
-                        .brand(Brand.builder().build())
-                        .color(Color.builder().build())
-                        .engine(Engine.builder().build())
-                        .type(Type.builder().build())
-                        .regNumber(RegNumber.builder().build())
                         .build())
                 .build()
         );
@@ -131,8 +125,6 @@ public class RentServiceTest {
                 .id(1)
                 .account(Account
                         .builder()
-                        .accountType(AccountType.builder().build())
-                        .accountDetail(AccountDetail.builder().build())
                         .build())
                 .build()
         );

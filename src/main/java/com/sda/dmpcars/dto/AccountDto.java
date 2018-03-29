@@ -19,7 +19,7 @@ public class AccountDto {
     private Integer id;
     private String username;
     private String password;
-    private String accountType;
+    private String role;
     private String firstName;
     private String lastName;
     private String email;

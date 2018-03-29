@@ -3,8 +3,6 @@ package com.sda.dmpcars.service;
 import com.sda.dmpcars.dao.AccountDao;
 import com.sda.dmpcars.dto.AccountDto;
 import com.sda.dmpcars.model.Account;
-import com.sda.dmpcars.model.AccountDetail;
-import com.sda.dmpcars.model.AccountType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +15,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -153,19 +150,11 @@ public class AccountServiceTest {
         account.setId(id);
         account.setUsername("username");
         account.setPassword("password");
-        account.setAccountType(AccountType
-                .builder()
-                .id(1)
-                .role("role")
-                .build());
-        account.setAccountDetail(AccountDetail
-                .builder()
-                .id(1)
-                .firstName("name")
-                .lastName("last")
-                .phoneNumber("number")
-                .email("email")
-                .build());
+        account.setRole("role");
+        account.setFirstName("name");
+        account.setLastName("last");
+        account.setPhoneNumber("number");
+        account.setEmail("email");
 
         return account;
     }

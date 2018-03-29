@@ -25,7 +25,7 @@ public class AccountService {
     public AccountDto addAccount(AccountDto accountDto) {
         if (validator.validate(accountDto)) {
             Account account = convertToAccount(accountDto);
-            account.setAccountType("USER");
+            account.setRole("USER");
             Account result = accountDao.save(account);
             return convertToAccountDto(result);
         }
@@ -50,10 +50,10 @@ public class AccountService {
         return result;
     }
 
-    public AccountDto updateAccount(AccountDto accountDto){
+    public AccountDto updateAccount(AccountDto accountDto) {
         Account account = convertToAccount(accountDto);
         account.setId(accountDto.getId());
-        account.setAccountType(accountDto.getAccountType());
+        account.setRole(accountDto.getRole());
 
         return convertToAccountDto(accountDao.save(account));
     }
@@ -93,7 +93,8 @@ public class AccountService {
                 .email(accountDto.getEmail())
                 .phoneNumber(accountDto.getPhoneNumber())
                 .yearOfBirth(accountDto.getYearOfBirth())
-                .accountType(accountDto.getAccountType()).build();
+                .role(accountDto.getRole())
+                .build();
     }
 
     AccountDto convertToAccountDto(Account account) {
@@ -109,7 +110,8 @@ public class AccountService {
                 .email(account.getEmail())
                 .phoneNumber(account.getPhoneNumber())
                 .yearOfBirth(account.getYearOfBirth())
-                .accountType(account.getAccountType()).build();
+                .role(account.getRole())
+                .build();
     }
 }
 
