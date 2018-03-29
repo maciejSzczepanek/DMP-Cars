@@ -73,19 +73,54 @@ public class CarService {
     }
 
     CarDto convertToCarDto(Car car) {
-        return CarDto.builder().id(car.getId()).model(car.getModel()).yearOfProduction(car.getYearOfProduction())
-                .capacity(car.getCapacity()).powerKm(car.getPowerKm()).available(car.isAvailable())
-                .price(car.getPrice()).brand(car.getBrand().getName()).color(car.getColor().getName())
-                .engine(car.getEngine().getType()).type(car.getType().getName())
-                .regNumber(car.getRegNumber().getNumber()).regVin(car.getRegNumber().getVin()).build();
+        return CarDto
+                .builder()
+                .id(car.getId())
+                .model(car.getModel())
+                .yearOfProduction(car.getYearOfProduction())
+                .capacity(car.getCapacity())
+                .powerKm(car.getPowerKm())
+                .available(car.isAvailable())
+                .price(car.getPrice())
+                .brand(car.getBrand().getName())
+                .color(car.getColor().getName())
+                .engine(car.getEngine().getType())
+                .type(car.getType().getName())
+                .regNumber(car.getRegNumber().getNumber())
+                .regVin(car.getRegNumber().getVin())
+                .build();
     }
 
     private Car convertToCar(CarDto carDto) {
-        return Car.builder().model(carDto.getModel()).yearOfProduction(carDto.getYearOfProduction())
-                .capacity(carDto.getCapacity()).powerKm(carDto.getPowerKm()).available(carDto.isAvailable())
-                .price(carDto.getPrice()).brand(Brand.builder().name(carDto.getBrand()).build())
-                .color(Color.builder().name(carDto.getColor()).build()).engine(Engine.builder().type(carDto.getEngine()).build())
-                .type(Type.builder().name(carDto.getType()).build()).regNumber(RegNumber.builder().number(carDto.getRegNumber())
-                        .vin(carDto.getRegVin()).build()).build();
+        return Car
+                .builder()
+                .model(carDto.getModel())
+                .yearOfProduction(carDto.getYearOfProduction())
+                .capacity(carDto.getCapacity())
+                .powerKm(carDto.getPowerKm())
+                .available(carDto.isAvailable())
+                .price(carDto.getPrice())
+                .brand(Brand
+                        .builder()
+                        .name(carDto.getBrand())
+                        .build())
+                .color(Color
+                        .builder()
+                        .name(carDto.getColor())
+                        .build())
+                .engine(Engine
+                        .builder()
+                        .type(carDto.getEngine())
+                        .build())
+                .type(Type
+                        .builder()
+                        .name(carDto.getType())
+                        .build())
+                .regNumber(RegNumber
+                        .builder()
+                        .number(carDto.getRegNumber())
+                        .vin(carDto.getRegVin())
+                        .build())
+                .build();
     }
 }

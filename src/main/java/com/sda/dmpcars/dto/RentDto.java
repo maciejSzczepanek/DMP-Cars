@@ -15,7 +15,7 @@ import java.util.Objects;
 @Builder
 
 public class RentDto {
-    private int id;
+    private Integer id;
     private Date fromDate;
     private Date toDate;
     private BigDecimal totalPrice;
@@ -27,7 +27,6 @@ public class RentDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
         RentDto rentDto = (RentDto) o;
         return id == rentDto.id;
     }
@@ -35,6 +34,6 @@ public class RentDto {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), id);
+        return Objects.hash(id);
     }
 }

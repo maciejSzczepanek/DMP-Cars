@@ -2,6 +2,7 @@ package com.sda.dmpcars.configuration;
 
 import com.sda.dmpcars.security.SimplePasswordEncoder;
 import com.sda.dmpcars.security.UserDetails;
+import com.sda.dmpcars.service.AccountService;
 import com.sda.dmpcars.validator.AccountDtoValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
